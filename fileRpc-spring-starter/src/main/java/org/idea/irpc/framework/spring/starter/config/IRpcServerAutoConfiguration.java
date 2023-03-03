@@ -16,7 +16,7 @@ import java.util.Map;
 
 /**
  * @Author jiangshang
- * @Date created in 7:29 下午 2022/3/7
+ * @Date created in 7:29 下午 2023/3/7
  */
 public class IRpcServerAutoConfiguration implements InitializingBean, ApplicationContextAware {
 

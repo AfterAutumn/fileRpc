@@ -6,7 +6,7 @@ import java.io.Serializable;
  * 测试自定义序列化技术时使用的demo
  *
  * @Author jiangshang
- * @Date created in 7:28 下午 2022/1/20
+ * @Date created in 7:28 下午 2023/1/20
  */
 public class User implements Serializable {
 

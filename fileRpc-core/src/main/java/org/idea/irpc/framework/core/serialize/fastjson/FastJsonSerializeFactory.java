@@ -5,7 +5,7 @@ import org.idea.irpc.framework.core.serialize.SerializeFactory;
 
 /**
  * @Author jiangshang
- * @Date created in 9:51 下午 2022/1/17
+ * @Date created in 9:51 下午 2023/1/17
  */
 public class FastJsonSerializeFactory implements SerializeFactory {
 

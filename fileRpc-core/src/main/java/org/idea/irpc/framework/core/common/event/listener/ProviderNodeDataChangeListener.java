@@ -11,7 +11,7 @@ import static org.idea.irpc.framework.core.common.cache.CommonClientCache.*;
 
 /**
  * @Author jiangshang
- * @Date created in 8:47 下午 2022/1/16
+ * @Date created in 8:47 下午 2023/1/16
  */
 public class ProviderNodeDataChangeListener implements IRpcListener<IRpcNodeChangeEvent> {
 

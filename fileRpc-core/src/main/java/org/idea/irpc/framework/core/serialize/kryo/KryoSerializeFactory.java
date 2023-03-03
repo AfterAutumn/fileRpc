@@ -12,7 +12,7 @@ import java.io.ByteArrayOutputStream;
  * kryo序列化工厂
  *
  * @Author jiangshang
- * @Date created in 9:41 下午 2022/1/17
+ * @Date created in 9:41 下午 2023/1/17
  */
 public class KryoSerializeFactory implements SerializeFactory {
 

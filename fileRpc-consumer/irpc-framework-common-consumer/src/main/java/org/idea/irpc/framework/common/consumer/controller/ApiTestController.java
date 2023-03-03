@@ -14,7 +14,7 @@ import java.util.Map;
 
 /**
  * @Author jiangshang
- * @Date created in 10:13 上午 2022/3/19
+ * @Date created in 10:13 上午 2023/3/19
  */
 @RestController
 @RequestMapping(value = "/api-test")
@@ -60,6 +60,7 @@ public class ApiTestController {
     public String buyGood() {
         String userId = userRpcService.getUserId();
         System.out.println("userRpcService result: " + userId);
-        return userId;
+        List<String> goods = goodRpcService.selectGoodsNoByUserId(userId);
+        return userId+goods.toString();
     }
 }

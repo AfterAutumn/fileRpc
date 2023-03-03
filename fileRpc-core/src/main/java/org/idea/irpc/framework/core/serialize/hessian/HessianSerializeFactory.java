@@ -9,7 +9,7 @@ import java.io.ByteArrayOutputStream;
 
 /**
  * @Author jiangshang
- * @Date created in 6:59 下午 2022/1/17
+ * @Date created in 6:59 下午 2023/1/17
  */
 public class HessianSerializeFactory implements SerializeFactory {
 

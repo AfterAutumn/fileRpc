@@ -2,7 +2,7 @@ package org.idea.irpc.framework.core.serialize;
 
 /**
  * @Author jiangshang
- * @Date created in 6:20 下午 2022/1/17
+ * @Date created in 6:20 下午 2023/1/17
  */
 public interface SerializeFactory {
 

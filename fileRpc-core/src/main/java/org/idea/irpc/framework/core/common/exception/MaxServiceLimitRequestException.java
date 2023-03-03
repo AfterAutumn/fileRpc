@@ -4,7 +4,7 @@ import org.idea.irpc.framework.core.common.RpcInvocation;
 
 /**
  * @Author jiangshang
- * @Date created in 9:53 下午 2022/3/5
+ * @Date created in 9:53 下午 2023/3/5
  */
 public class MaxServiceLimitRequestException extends IRpcException{
 

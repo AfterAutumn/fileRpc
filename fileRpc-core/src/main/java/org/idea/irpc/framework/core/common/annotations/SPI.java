@@ -4,7 +4,7 @@ import java.lang.annotation.*;
 
 /**
  * @Author jiangshang
- * @Date created in 11:42 上午 2022/3/6
+ * @Date created in 11:42 上午 2023/3/6
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)

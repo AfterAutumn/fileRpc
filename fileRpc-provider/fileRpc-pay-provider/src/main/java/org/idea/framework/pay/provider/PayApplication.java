@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
  * @Author jiangshang
- * @Date created in 1:23 下午 2022/3/19
+ * @Date created in 1:23 下午 2023/3/19
  */
 @SpringBootApplication
 public class PayApplication {

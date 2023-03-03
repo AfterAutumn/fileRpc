@@ -22,7 +22,7 @@ import java.lang.reflect.Field;
 
 /**
  * @Author jiangshang
- * @Date created in 5:53 下午 2022/3/8
+ * @Date created in 5:53 下午 2023/3/8
  */
 public class IRpcClientAutoConfiguration implements BeanPostProcessor, ApplicationListener<ApplicationReadyEvent> {
 

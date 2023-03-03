@@ -7,7 +7,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * rpc远程调用包装类
  *
  * @Author jiangshang
- * @Date created in 11:28 上午 2022/1/29
+ * @Date created in 11:28 上午 2023/1/29
  */
 public class RpcReferenceWrapper<T> {
 

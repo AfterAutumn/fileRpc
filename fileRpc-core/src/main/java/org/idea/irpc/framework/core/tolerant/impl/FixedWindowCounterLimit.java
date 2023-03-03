@@ -10,7 +10,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * @Author jiangshang
- * @Date created in 4:09 下午 2022/3/1
+ * @Date created in 4:09 下午 2023/3/1
  */
 public class FixedWindowCounterLimit extends CounterLimit {
 

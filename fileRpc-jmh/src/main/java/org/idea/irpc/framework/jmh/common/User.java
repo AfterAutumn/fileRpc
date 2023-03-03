@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 /**
  * @Author jiangshang
- * @Date created in 2:38 下午 2022/1/20
+ * @Date created in 2:38 下午 2023/1/20
  */
 public class User implements Serializable {
 

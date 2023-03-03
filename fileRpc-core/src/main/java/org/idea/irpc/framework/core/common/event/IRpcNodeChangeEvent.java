@@ -2,7 +2,7 @@ package org.idea.irpc.framework.core.common.event;
 
 /**
  * @Author jiangshang
- * @Date created in 8:44 下午 2022/1/16
+ * @Date created in 8:44 下午 2023/1/16
  */
 public class IRpcNodeChangeEvent implements IRpcEvent {
 

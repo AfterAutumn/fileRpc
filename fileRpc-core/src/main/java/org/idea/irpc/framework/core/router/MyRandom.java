@@ -2,7 +2,7 @@ package org.idea.irpc.framework.core.router;
 
 /**
  * @Author jiangshang
- * @Date created in 3:46 下午 2022/1/16
+ * @Date created in 3:46 下午 2023/1/16
  */
 public class MyRandom {
 

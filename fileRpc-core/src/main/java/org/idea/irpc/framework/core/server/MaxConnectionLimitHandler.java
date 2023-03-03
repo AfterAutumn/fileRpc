@@ -16,7 +16,7 @@ import java.util.concurrent.atomic.LongAdder;
  * 最大连接数限制处理器
  *
  * @Author jiangshang
- * @Date created in 10:47 上午 2022/3/6
+ * @Date created in 10:47 上午 2023/3/6
  */
 @ChannelHandler.Sharable
 public class MaxConnectionLimitHandler extends ChannelInboundHandlerAdapter {

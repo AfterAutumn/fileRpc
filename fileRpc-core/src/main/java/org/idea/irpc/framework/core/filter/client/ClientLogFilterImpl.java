@@ -14,7 +14,7 @@ import static org.idea.irpc.framework.core.common.cache.CommonClientCache.CLIENT
  * 客户端调用日志过滤器
  *
  * @Author jiangshang
- * @Date created in 8:01 下午 2022/1/29
+ * @Date created in 8:01 下午 2023/1/29
  */
 public class ClientLogFilterImpl implements IClientFilter {
 

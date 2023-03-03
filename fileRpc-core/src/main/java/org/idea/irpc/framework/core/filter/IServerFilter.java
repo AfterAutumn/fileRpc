@@ -7,7 +7,7 @@ import org.idea.irpc.framework.core.common.RpcInvocation;
  * 服务端过滤器
  *
  * @Author jiangshang
- * @Date created in 7:57 下午 2022/1/29
+ * @Date created in 7:57 下午 2023/1/29
  */
 public interface IServerFilter extends IFilter {
 
