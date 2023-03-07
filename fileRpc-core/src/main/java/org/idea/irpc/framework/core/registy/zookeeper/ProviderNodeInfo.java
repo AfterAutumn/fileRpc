@@ -1,8 +1,9 @@
 package org.idea.irpc.framework.core.registy.zookeeper;
 
 /**
+ * 服务提供者节点实体类
  * @Author jiangshang
- * @Date created in 11:43 下午 2021/12/13
+ * @Date created  2023/3/6
  */
 public class ProviderNodeInfo {
 

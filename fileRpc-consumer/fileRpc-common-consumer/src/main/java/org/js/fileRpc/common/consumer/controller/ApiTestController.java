@@ -1,4 +1,4 @@
-package org.idea.irpc.framework.common.consumer.controller;
+package org.js.fileRpc.common.consumer.controller;
 
 import org.idea.irpc.framework.interfaces.OrderService;
 import org.idea.irpc.framework.interfaces.good.GoodRpcService;

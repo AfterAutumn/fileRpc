@@ -1,4 +1,4 @@
-package org.idea.framework.user.provider.service;
+package org.js.fileRpc.user.provider.service;
 
 import org.idea.irpc.framework.interfaces.good.GoodRpcService;
 import org.idea.irpc.framework.interfaces.pay.PayRpcService;

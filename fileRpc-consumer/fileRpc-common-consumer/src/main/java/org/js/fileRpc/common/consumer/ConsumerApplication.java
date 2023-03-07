@@ -1,4 +1,4 @@
-package org.idea.irpc.framework.common.consumer;
+package org.js.fileRpc.common.consumer;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

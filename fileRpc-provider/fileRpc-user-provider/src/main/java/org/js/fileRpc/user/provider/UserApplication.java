@@ -1,4 +1,4 @@
-package org.idea.framework.user.provider;
+package org.js.fileRpc.user.provider;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.WebApplicationType;

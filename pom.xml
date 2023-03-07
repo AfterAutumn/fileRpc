@@ -18,6 +18,6 @@
 
     <packaging>pom</packaging>
 
-    <description>一款轻量级的rpc框架</description>
+    <description>基于RPC原理的分布式系统下文件传输框架</description>
 
 </project>

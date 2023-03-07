@@ -12,7 +12,7 @@
     <artifactId>fileRpc-consumer</artifactId>
     <packaging>pom</packaging>
     <modules>
-        <module>irpc-framework-common-consumer</module>
+        <module>fileRpc-common-consumer</module>
     </modules>
 
     <properties>
