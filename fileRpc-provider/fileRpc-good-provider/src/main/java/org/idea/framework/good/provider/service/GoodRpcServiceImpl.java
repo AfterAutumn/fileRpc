@@ -1,6 +1,6 @@
 package org.idea.framework.good.provider.service;
 
-import org.idea.irpc.framework.interfaces.good.GoodRpcService;
+import org.js.fileRpc.interfaces.good.GoodRpcService;
 import org.idea.irpc.framework.spring.starter.common.IRpcService;
 
 import java.util.Arrays;

@@ -1,6 +1,6 @@
 package org.idea.irpc.framework.core.server;
 
-import org.idea.irpc.framework.interfaces.UserService;
+import org.js.fileRpc.interfaces.UserService;
 
 /**
  * @Author jiangshang

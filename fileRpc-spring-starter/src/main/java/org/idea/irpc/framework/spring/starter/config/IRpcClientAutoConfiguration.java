@@ -1,23 +1,17 @@
 package org.idea.irpc.framework.spring.starter.config;
 
-import com.esotericsoftware.minlog.Log;
 import org.idea.irpc.framework.core.client.Client;
 import org.idea.irpc.framework.core.client.ConnectionHandler;
 import org.idea.irpc.framework.core.client.RpcReference;
 import org.idea.irpc.framework.core.client.RpcReferenceWrapper;
-import org.idea.irpc.framework.interfaces.DataService;
 import org.idea.irpc.framework.spring.starter.common.IRpcReference;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
-import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.ApplicationListener;
 
-import java.io.IOException;
 import java.lang.reflect.Field;
 
 /**

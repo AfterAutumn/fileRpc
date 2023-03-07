@@ -1,16 +1,14 @@
 package org.js.fileRpc.common.consumer.controller;
 
-import org.idea.irpc.framework.interfaces.OrderService;
-import org.idea.irpc.framework.interfaces.good.GoodRpcService;
-import org.idea.irpc.framework.interfaces.pay.PayRpcService;
-import org.idea.irpc.framework.interfaces.user.UserRpcService;
+import org.js.fileRpc.interfaces.good.GoodRpcService;
+import org.js.fileRpc.interfaces.pay.PayRpcService;
+import org.js.fileRpc.interfaces.user.UserRpcService;
 import org.idea.irpc.framework.spring.starter.common.IRpcReference;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * @Author jiangshang
@@ -62,5 +60,15 @@ public class ApiTestController {
         System.out.println("userRpcService result: " + userId);
         List<String> goods = goodRpcService.selectGoodsNoByUserId(userId);
         return userId+goods.toString();
+    }
+
+    /**
+     * 测试用户服务
+     */
+    @GetMapping(value = "/findUser")
+    public String findUser() {
+        String userId = userRpcService.getUserId();
+        System.out.println("userRpcService result: " + userId);
+        return userId;
     }
 }

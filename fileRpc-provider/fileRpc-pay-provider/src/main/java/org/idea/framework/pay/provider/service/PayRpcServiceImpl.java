@@ -1,6 +1,6 @@
 package org.idea.framework.pay.provider.service;
 
-import org.idea.irpc.framework.interfaces.pay.PayRpcService;
+import org.js.fileRpc.interfaces.pay.PayRpcService;
 import org.idea.irpc.framework.spring.starter.common.IRpcService;
 
 import java.util.Arrays;
