@@ -1,0 +1,12 @@
+server:
+  port: 8089
+  servlet:
+    context-path: /
+spring:
+  application:
+    name: user1Provider
+nacos:
+  config:
+    server-addr: 127.0.0.1:8848
+  discovery:
+    server-addr: 127.0.0.1:8848
