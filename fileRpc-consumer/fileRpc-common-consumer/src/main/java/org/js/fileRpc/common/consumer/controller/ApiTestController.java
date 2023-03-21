@@ -1,13 +1,18 @@
 package org.js.fileRpc.common.consumer.controller;
 
+import org.js.fileRpc.interfaces.bean.FileMessage;
 import org.js.fileRpc.interfaces.good.GoodRpcService;
 import org.js.fileRpc.interfaces.pay.PayRpcService;
-import org.js.fileRpc.interfaces.user.UserRpcService;
+import org.js.fileRpc.interfaces.fileTransfer.FileTransferRpcService;
 import org.idea.irpc.framework.spring.starter.common.IRpcReference;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
 /**
@@ -19,7 +24,7 @@ import java.util.List;
 public class ApiTestController {
 
     @IRpcReference
-    private UserRpcService userRpcService;
+    private FileTransferRpcService userRpcService;
     @IRpcReference
     private GoodRpcService goodRpcService;
     @IRpcReference
@@ -59,7 +64,7 @@ public class ApiTestController {
         String userId = userRpcService.getUserId();
         System.out.println("userRpcService result: " + userId);
         List<String> goods = goodRpcService.selectGoodsNoByUserId(userId);
-        return userId+goods.toString();
+        return userId + goods.toString();
     }
 
     /**
@@ -71,4 +76,42 @@ public class ApiTestController {
         System.out.println("userRpcService result: " + userId);
         return userId;
     }
+
+    @GetMapping(value = "/uploadFile")
+    public void testFile() throws IOException {
+        // 通过RPC框架获取FileTransferService服务对象
+        // 读取本地文件内容
+        Path filePath = Paths.get("D:\\test\\test.txt");
+        byte[] buffer = new byte[1024];
+        int bytesRead = 0;
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+
+        try (InputStream inputStream = Files.newInputStream(filePath)) {
+            while ((bytesRead = inputStream.read(buffer)) != -1) {
+                outputStream.write(buffer, 0, bytesRead);
+            }
+        }
+
+        byte[] fileData = outputStream.toByteArray();
+        FileMessage message = new FileMessage("test.txt", fileData.length);
+
+        // 调用远程方法上传文件
+        userRpcService.uploadFile(message, fileData);
+    }
+
+
+    @GetMapping(value = "/downloadFile")
+    public void downloadFile() throws IOException {
+        // 通过RPC框架获取FileTransferService服务对象
+        // 调用远程方法下载文件
+        FileMessage message = userRpcService.downloadFile("test.txt");
+        byte[] fileData = message.getFileData();
+
+        // 将文件数据写入本地磁盘中
+        String filePath = "D:/" + message.getFileName();
+        try (OutputStream outputStream = new FileOutputStream(filePath)) {
+            outputStream.write(fileData);
+        }
+    }
+
 }

@@ -14,10 +14,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @EnableNacosDiscovery //注册中心注解 使用nacos
 @NacosPropertySource(dataId = "product_config",autoRefreshed = true) //配置中心注解：autoRefreshed 代表自动刷新注解
-public class User1Application {
+public class FileTransferApplication {
 
     public static void main(String[] args) {
-        SpringApplication springApplication = new SpringApplication(User1Application.class);
+        SpringApplication springApplication = new SpringApplication(FileTransferApplication.class);
         springApplication.setWebApplicationType(WebApplicationType.NONE);
         springApplication.run(args);
     }

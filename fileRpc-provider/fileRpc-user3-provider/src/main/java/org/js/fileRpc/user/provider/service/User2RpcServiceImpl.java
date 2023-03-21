@@ -2,7 +2,7 @@ package org.js.fileRpc.user.provider.service;
 
 import org.js.fileRpc.interfaces.good.GoodRpcService;
 import org.js.fileRpc.interfaces.pay.PayRpcService;
-import org.js.fileRpc.interfaces.user.UserRpcService;
+import org.js.fileRpc.interfaces.fileTransfer.UserRpcService;
 import org.idea.irpc.framework.spring.starter.common.IRpcReference;
 import org.idea.irpc.framework.spring.starter.common.IRpcService;
 

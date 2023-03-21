@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>fileRpc-user1-provider</artifactId>
+    <artifactId>fileRpc-fileTransfer-provider</artifactId>
     <build>
         <plugins>
             <plugin>
