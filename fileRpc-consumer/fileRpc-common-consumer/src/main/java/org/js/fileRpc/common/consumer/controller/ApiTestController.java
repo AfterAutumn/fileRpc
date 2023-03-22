@@ -1,5 +1,6 @@
 package org.js.fileRpc.common.consumer.controller;
 
+import com.alibaba.nacos.api.config.annotation.NacosValue;
 import org.js.fileRpc.interfaces.bean.FileMessage;
 import org.js.fileRpc.interfaces.good.GoodRpcService;
 import org.js.fileRpc.interfaces.pay.PayRpcService;
@@ -21,6 +22,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping(value = "/api-test")
+
 public class ApiTestController {
 
     @IRpcReference
@@ -29,6 +31,16 @@ public class ApiTestController {
     private GoodRpcService goodRpcService;
     @IRpcReference
     private PayRpcService payRpcService;
+
+    @NacosValue(value = "${productName}",autoRefreshed = true)
+    private  String productName;
+
+    @RequestMapping("/productName")
+    public String getProductName(){
+
+        return productName;
+    }
+
 
     @GetMapping(value = "/do-test")
     public boolean doTest() {

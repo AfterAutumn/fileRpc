@@ -61,10 +61,8 @@ public class IRpcServerAutoConfiguration implements InitializingBean, Applicatio
     private void printBanner(){
         System.out.println();
         System.out.println("==============================================");
-        System.out.println("|||---------- IRpc Starting Now! ----------|||");
+        System.out.println("|||---------- FileRpc Starting Now! ----------|||");
         System.out.println("==============================================");
-        System.out.println("源代码地址: https://gitee.com/IdeaHome_admin/irpc-framework");
-        System.out.println("version: 1.0.0");
         System.out.println();
     }
 }

@@ -45,6 +45,12 @@ public class FileTransferRpcServiceImpl implements FileTransferRpcService {
         return finalResult;
     }
 
+    /**
+     * 客户端上传文件到服务端
+     * @param message
+     * @param fileData
+     * @throws IOException
+     */
     public void uploadFile(FileMessage message, byte[] fileData) throws IOException {
         String directoryPath = "D:\\test\\upload";
         File directory = new File(directoryPath);
