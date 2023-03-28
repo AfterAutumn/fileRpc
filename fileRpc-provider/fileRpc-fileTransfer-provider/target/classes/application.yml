@@ -5,8 +5,24 @@ server:
 spring:
   application:
     name: fileTransferProvider
+  dynamic:
+    tp:
+      enabled: true
+      enabledBanner: true
+      nacos:
+        dataId: fileTransferProvider-default.yml
+        group: DEFAULT_GROUP
+      executors:
+        - threadPoolName: myDtpExecutor
+          corePoolSize: 1
+          maximumPoolSize: 2
+          queueCapacity: 5
+          keepAliveTime: 200
+          allowCoreThreadTimeOut: false
+
 nacos:
   config:
     server-addr: 127.0.0.1:8848
   discovery:
     server-addr: 127.0.0.1:8848
+

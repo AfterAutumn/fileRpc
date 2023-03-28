@@ -19,4 +19,6 @@ public interface FileTransferRpcService {
     void uploadFile(FileMessage message, byte[] in) throws IOException;
 
     FileMessage downloadFile(String fileName) throws IOException;
+
+    String testThread(String job);
 }

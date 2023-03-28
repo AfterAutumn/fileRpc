@@ -26,26 +26,26 @@ import java.util.List;
 public class ApiTestController {
 
     @IRpcReference
-    private FileTransferRpcService userRpcService;
+    private FileTransferRpcService fileTransferService;
     @IRpcReference
     private GoodRpcService goodRpcService;
     @IRpcReference
     private PayRpcService payRpcService;
 
-    @NacosValue(value = "${productName}",autoRefreshed = true)
-    private  String productName;
+/*    @NacosValue(value = "${productName}",autoRefreshed = true)
+    private  String productName;*/
 
-    @RequestMapping("/productName")
+ /*   @RequestMapping("/productName")
     public String getProductName(){
 
         return productName;
-    }
+    }*/
 
 
     @GetMapping(value = "/do-test")
     public boolean doTest() {
         long begin1 = System.currentTimeMillis();
-        userRpcService.getUserId();
+        fileTransferService.getUserId();
         long end1 = System.currentTimeMillis();
         System.out.println("userRpc--->" + (end1 - begin1) + "ms");
         long begin2 = System.currentTimeMillis();
@@ -62,7 +62,7 @@ public class ApiTestController {
 
     @GetMapping(value = "/do-test-2")
     public void doTest2() {
-        String userId = userRpcService.getUserId();
+        String userId = fileTransferService.getUserId();
         System.out.println("userRpcService result: " + userId);
         boolean goodResult = goodRpcService.decreaseStock();
         System.out.println("goodRpcService result: " + goodResult);
@@ -73,7 +73,7 @@ public class ApiTestController {
      */
     @GetMapping(value = "/buyGood")
     public String buyGood() {
-        String userId = userRpcService.getUserId();
+        String userId = fileTransferService.getUserId();
         System.out.println("userRpcService result: " + userId);
         List<String> goods = goodRpcService.selectGoodsNoByUserId(userId);
         return userId + goods.toString();
@@ -84,7 +84,7 @@ public class ApiTestController {
      */
     @GetMapping(value = "/findUser")
     public String findUser() {
-        String userId = userRpcService.getUserId();
+        String userId = fileTransferService.getUserId();
         System.out.println("userRpcService result: " + userId);
         return userId;
     }
@@ -108,7 +108,7 @@ public class ApiTestController {
         FileMessage message = new FileMessage("test.txt", fileData.length);
 
         // 调用远程方法上传文件
-        userRpcService.uploadFile(message, fileData);
+        fileTransferService.uploadFile(message, fileData);
     }
 
 
@@ -116,7 +116,7 @@ public class ApiTestController {
     public void downloadFile() throws IOException {
         // 通过RPC框架获取FileTransferService服务对象
         // 调用远程方法下载文件
-        FileMessage message = userRpcService.downloadFile("test.txt");
+        FileMessage message = fileTransferService.downloadFile("test.txt");
         byte[] fileData = message.getFileData();
 
         // 将文件数据写入本地磁盘中
@@ -124,6 +124,17 @@ public class ApiTestController {
         try (OutputStream outputStream = new FileOutputStream(filePath)) {
             outputStream.write(fileData);
         }
+    }
+
+
+    /**
+     * 测试动态线程池
+     */
+    @GetMapping(value = "/testThread")
+    public String findUser(String job) {
+        String result = fileTransferService.testThread(job);
+        System.out.println("动态线程池测试: " + result);
+        return result;
     }
 
 }
