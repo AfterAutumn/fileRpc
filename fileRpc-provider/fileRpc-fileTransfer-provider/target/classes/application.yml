@@ -14,8 +14,8 @@ spring:
         group: DEFAULT_GROUP
       executors:
         - threadPoolName: myDtpExecutor
-          corePoolSize: 1
-          maximumPoolSize: 2
+          corePoolSize: 4
+          maximumPoolSize: 10
           queueCapacity: 5
           keepAliveTime: 200
           allowCoreThreadTimeOut: false
