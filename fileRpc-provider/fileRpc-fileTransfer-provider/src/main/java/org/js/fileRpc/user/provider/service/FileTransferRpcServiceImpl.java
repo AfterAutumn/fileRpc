@@ -17,6 +17,10 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.*;
+import java.util.concurrent.Executors;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @Author jiangshang
@@ -34,6 +38,17 @@ public class FileTransferRpcServiceImpl implements FileTransferRpcService {
     public String getUserId() {
         return "i am user1 service"+UUID.randomUUID().toString();
     }
+
+  /*  private  DtpExecutor dtpExecutor = DtpRegistry.getDtpExecutor("myDtpExecutor");*/
+
+
+    public static final ThreadPoolExecutor threadPool = new ThreadPoolExecutor(
+            4, 10,
+            1000, TimeUnit.MILLISECONDS,
+            new LinkedBlockingQueue<Runnable>(200),
+            Executors.defaultThreadFactory(),
+            new ThreadPoolExecutor.CallerRunsPolicy()
+    );
 
     @Override
     public List<Map<String, String>> findMyGoods(String userId) {
@@ -96,12 +111,20 @@ public class FileTransferRpcServiceImpl implements FileTransferRpcService {
     @Override
     public String testThread(FileMessage message) {
         DtpExecutor dtpExecutor = DtpRegistry.getDtpExecutor("myDtpExecutor");
-        dtpExecutor.execute(() -> System.out.println("动态线程池测试"));
-        System.out.println("线程池名"+dtpExecutor.getThreadPoolName()+"  核心线程数：" + dtpExecutor.getCorePoolSize() + " " +"最大线程数：" + dtpExecutor.getMaximumPoolSize()
+        System.out.println(" 核心线程数：" + dtpExecutor.getCorePoolSize() + " " +"最大线程数：" + dtpExecutor.getMaximumPoolSize()
                 +" " + "阻塞队列数：" + dtpExecutor.getQueue().size()  +" " + "活跃线程数：" + dtpExecutor.getActiveCount());
 
         dtpExecutor.execute(new UploadTask(message));
         return "success";
+    }
+
+    @Override
+    public String testNormalThread(FileMessage message) {
+        System.out.println(" 核心线程数：" + threadPool.getCorePoolSize() + " " +"最大线程数：" + threadPool.getMaximumPoolSize()
+                +" " + "阻塞队列数：" + threadPool.getQueue().size()  +" " + "活跃线程数：" + threadPool.getActiveCount());
+
+        threadPool.execute(new UploadTask(message));
+        return "Normal success";
     }
 
 

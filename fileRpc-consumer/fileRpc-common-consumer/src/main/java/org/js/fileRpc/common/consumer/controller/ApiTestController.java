@@ -138,6 +138,17 @@ public class ApiTestController {
         return result;
     }
 
+    /**
+     * 测试普通线程池的执行效率
+     */
+    @GetMapping(value = "/testNormalThread")
+    public String testNormalThread() throws IOException {
+
+        String result = fileTransferService.testNormalThread(readFile());
+        System.out.println("动态线程池测试: " + result);
+        return result;
+    }
+
 
     public FileMessage readFile() throws IOException {
         // 读取本地文件内容

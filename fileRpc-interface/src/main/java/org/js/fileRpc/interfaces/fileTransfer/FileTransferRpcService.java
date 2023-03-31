@@ -21,4 +21,6 @@ public interface FileTransferRpcService {
     FileMessage downloadFile(String fileName) throws IOException;
 
     String testThread(FileMessage message);
+
+    String testNormalThread(FileMessage message);
 }

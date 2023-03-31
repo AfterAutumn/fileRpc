@@ -3,7 +3,6 @@ dontinline,*.*_avgt_jmhStub
 dontinline,*.*_sample_jmhStub
 dontinline,*.*_ss_jmhStub
 dontinline,*.*_thrpt_jmhStub
-inline,org/idea/irpc/framework/jmh/serialize/SerializeCompareTest.fastJsonSerializeTest
-inline,org/idea/irpc/framework/jmh/serialize/SerializeCompareTest.hessianSerializeTest
-inline,org/idea/irpc/framework/jmh/serialize/SerializeCompareTest.jdkSerializeTest
-inline,org/idea/irpc/framework/jmh/serialize/SerializeCompareTest.kryoSerializeTest
+inline,org/js/fileRpc/jmh/DynamicThreadTest/DynamicThreadTest.cleanUp
+inline,org/js/fileRpc/jmh/DynamicThreadTest/DynamicThreadTest.prepare
+inline,org/js/fileRpc/jmh/DynamicThreadTest/DynamicThreadTest.testThreadPool
