@@ -131,10 +131,29 @@ public class ApiTestController {
      * 测试动态线程池
      */
     @GetMapping(value = "/testThread")
-    public String findUser(String job) {
-        String result = fileTransferService.testThread(job);
+    public String testThread() throws IOException {
+
+        String result = fileTransferService.testThread(readFile());
         System.out.println("动态线程池测试: " + result);
         return result;
+    }
+
+
+    public FileMessage readFile() throws IOException {
+        // 读取本地文件内容
+        Path filePath = Paths.get("D:\\test\\test.txt");
+        byte[] buffer = new byte[1024];
+        int bytesRead = 0;
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+
+        try (InputStream inputStream = Files.newInputStream(filePath)) {
+            while ((bytesRead = inputStream.read(buffer)) != -1) {
+                outputStream.write(buffer, 0, bytesRead);
+            }
+        }
+        byte[] fileData = outputStream.toByteArray();
+        return new FileMessage("test.txt", fileData, fileData.length);
+
     }
 
 }

@@ -1,4 +1,4 @@
-package org.js.fileRpc.jmh.serialize.generated;
+package org.js.fileRpc.jmh.DynamicThreadTest.generated;
 
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -32,8 +32,8 @@ import org.openjdk.jmh.results.ScalarResult;
 import org.openjdk.jmh.results.AggregationPolicy;
 import org.openjdk.jmh.runner.FailureAssistException;
 
-import org.js.fileRpc.jmh.serialize.generated.SerializeCompareTest_jmhType;
-public final class SerializeCompareTest_hessianSerializeTest_jmhTest {
+import org.js.fileRpc.jmh.DynamicThreadTest.generated.DynamicThreadTest_jmhType;
+public final class DynamicThreadTest_testThreadPool_jmhTest {
 
     boolean p000, p001, p002, p003, p004, p005, p006, p007, p008, p009, p010, p011, p012, p013, p014, p015;
     boolean p016, p017, p018, p019, p020, p021, p022, p023, p024, p025, p026, p027, p028, p029, p030, p031;
@@ -58,7 +58,7 @@ public final class SerializeCompareTest_hessianSerializeTest_jmhTest {
     Blackhole blackhole;
     Control notifyControl;
 
-    public BenchmarkTaskResult hessianSerializeTest_Throughput(InfraControl control, ThreadParams threadParams) throws Throwable {
+    public BenchmarkTaskResult testThreadPool_Throughput(InfraControl control, ThreadParams threadParams) throws Throwable {
         this.benchmarkParams = control.benchmarkParams;
         this.iterationParams = control.iterationParams;
         this.threadParams    = threadParams;
@@ -68,24 +68,24 @@ public final class SerializeCompareTest_hessianSerializeTest_jmhTest {
         }
         if (threadParams.getSubgroupIndex() == 0) {
             RawResults res = new RawResults();
-            SerializeCompareTest_jmhType l_serializecomparetest0_0 = _jmh_tryInit_f_serializecomparetest0_0(control);
+            DynamicThreadTest_jmhType l_dynamicthreadtest0_G = _jmh_tryInit_f_dynamicthreadtest0_G(control);
 
             control.preSetup();
 
 
             control.announceWarmupReady();
             while (control.warmupShouldWait) {
-                l_serializecomparetest0_0.hessianSerializeTest();
+                l_dynamicthreadtest0_G.testThreadPool();
                 res.allOps++;
             }
 
             notifyControl.startMeasurement = true;
-            hessianSerializeTest_thrpt_jmhStub(control, res, benchmarkParams, iterationParams, threadParams, blackhole, notifyControl, startRndMask, l_serializecomparetest0_0);
+            testThreadPool_thrpt_jmhStub(control, res, benchmarkParams, iterationParams, threadParams, blackhole, notifyControl, startRndMask, l_dynamicthreadtest0_G);
             notifyControl.stopMeasurement = true;
             control.announceWarmdownReady();
             try {
                 while (control.warmdownShouldWait) {
-                    l_serializecomparetest0_0.hessianSerializeTest();
+                    l_dynamicthreadtest0_G.testThreadPool();
                     res.allOps++;
                 }
                 control.preTearDown();
@@ -94,7 +94,31 @@ public final class SerializeCompareTest_hessianSerializeTest_jmhTest {
             }
 
             if (control.isLastIteration()) {
-                f_serializecomparetest0_0 = null;
+                if (DynamicThreadTest_jmhType.tearTrialMutexUpdater.compareAndSet(l_dynamicthreadtest0_G, 0, 1)) {
+                    try {
+                        if (control.isFailing) throw new FailureAssistException();
+                        if (l_dynamicthreadtest0_G.readyTrial) {
+                            l_dynamicthreadtest0_G.cleanUp();
+                            l_dynamicthreadtest0_G.readyTrial = false;
+                        }
+                    } catch (Throwable t) {
+                        control.isFailing = true;
+                        throw t;
+                    } finally {
+                        DynamicThreadTest_jmhType.tearTrialMutexUpdater.set(l_dynamicthreadtest0_G, 0);
+                    }
+                } else {
+                    long l_dynamicthreadtest0_G_backoff = 1;
+                    while (DynamicThreadTest_jmhType.tearTrialMutexUpdater.get(l_dynamicthreadtest0_G) == 1) {
+                        TimeUnit.MILLISECONDS.sleep(l_dynamicthreadtest0_G_backoff);
+                        l_dynamicthreadtest0_G_backoff = Math.max(1024, l_dynamicthreadtest0_G_backoff * 2);
+                        if (control.isFailing) throw new FailureAssistException();
+                        if (Thread.interrupted()) throw new InterruptedException();
+                    }
+                }
+                synchronized(this.getClass()) {
+                    f_dynamicthreadtest0_G = null;
+                }
             }
             res.allOps += res.measuredOps;
             int batchSize = iterationParams.getBatchSize();
@@ -104,19 +128,19 @@ public final class SerializeCompareTest_hessianSerializeTest_jmhTest {
             res.measuredOps *= opsPerInv;
             res.measuredOps /= batchSize;
             BenchmarkTaskResult results = new BenchmarkTaskResult(res.allOps, res.measuredOps);
-            results.add(new ThroughputResult(ResultRole.PRIMARY, "hessianSerializeTest", res.measuredOps, res.getTime(), benchmarkParams.getTimeUnit()));
+            results.add(new ThroughputResult(ResultRole.PRIMARY, "testThreadPool", res.measuredOps, res.getTime(), benchmarkParams.getTimeUnit()));
             this.blackhole.evaporate("Yes, I am Stephen Hawking, and know a thing or two about black holes.");
             return results;
         } else
             throw new IllegalStateException("Harness failed to distribute threads among groups properly");
     }
 
-    public static void hessianSerializeTest_thrpt_jmhStub(InfraControl control, RawResults result, BenchmarkParams benchmarkParams, IterationParams iterationParams, ThreadParams threadParams, Blackhole blackhole, Control notifyControl, int startRndMask, SerializeCompareTest_jmhType l_serializecomparetest0_0) throws Throwable {
+    public static void testThreadPool_thrpt_jmhStub(InfraControl control, RawResults result, BenchmarkParams benchmarkParams, IterationParams iterationParams, ThreadParams threadParams, Blackhole blackhole, Control notifyControl, int startRndMask, DynamicThreadTest_jmhType l_dynamicthreadtest0_G) throws Throwable {
         long operations = 0;
         long realTime = 0;
         result.startTime = System.nanoTime();
         do {
-            l_serializecomparetest0_0.hessianSerializeTest();
+            l_dynamicthreadtest0_G.testThreadPool();
             operations++;
         } while(!control.isDone);
         result.stopTime = System.nanoTime();
@@ -125,7 +149,7 @@ public final class SerializeCompareTest_hessianSerializeTest_jmhTest {
     }
 
 
-    public BenchmarkTaskResult hessianSerializeTest_AverageTime(InfraControl control, ThreadParams threadParams) throws Throwable {
+    public BenchmarkTaskResult testThreadPool_AverageTime(InfraControl control, ThreadParams threadParams) throws Throwable {
         this.benchmarkParams = control.benchmarkParams;
         this.iterationParams = control.iterationParams;
         this.threadParams    = threadParams;
@@ -135,24 +159,24 @@ public final class SerializeCompareTest_hessianSerializeTest_jmhTest {
         }
         if (threadParams.getSubgroupIndex() == 0) {
             RawResults res = new RawResults();
-            SerializeCompareTest_jmhType l_serializecomparetest0_0 = _jmh_tryInit_f_serializecomparetest0_0(control);
+            DynamicThreadTest_jmhType l_dynamicthreadtest0_G = _jmh_tryInit_f_dynamicthreadtest0_G(control);
 
             control.preSetup();
 
 
             control.announceWarmupReady();
             while (control.warmupShouldWait) {
-                l_serializecomparetest0_0.hessianSerializeTest();
+                l_dynamicthreadtest0_G.testThreadPool();
                 res.allOps++;
             }
 
             notifyControl.startMeasurement = true;
-            hessianSerializeTest_avgt_jmhStub(control, res, benchmarkParams, iterationParams, threadParams, blackhole, notifyControl, startRndMask, l_serializecomparetest0_0);
+            testThreadPool_avgt_jmhStub(control, res, benchmarkParams, iterationParams, threadParams, blackhole, notifyControl, startRndMask, l_dynamicthreadtest0_G);
             notifyControl.stopMeasurement = true;
             control.announceWarmdownReady();
             try {
                 while (control.warmdownShouldWait) {
-                    l_serializecomparetest0_0.hessianSerializeTest();
+                    l_dynamicthreadtest0_G.testThreadPool();
                     res.allOps++;
                 }
                 control.preTearDown();
@@ -161,7 +185,31 @@ public final class SerializeCompareTest_hessianSerializeTest_jmhTest {
             }
 
             if (control.isLastIteration()) {
-                f_serializecomparetest0_0 = null;
+                if (DynamicThreadTest_jmhType.tearTrialMutexUpdater.compareAndSet(l_dynamicthreadtest0_G, 0, 1)) {
+                    try {
+                        if (control.isFailing) throw new FailureAssistException();
+                        if (l_dynamicthreadtest0_G.readyTrial) {
+                            l_dynamicthreadtest0_G.cleanUp();
+                            l_dynamicthreadtest0_G.readyTrial = false;
+                        }
+                    } catch (Throwable t) {
+                        control.isFailing = true;
+                        throw t;
+                    } finally {
+                        DynamicThreadTest_jmhType.tearTrialMutexUpdater.set(l_dynamicthreadtest0_G, 0);
+                    }
+                } else {
+                    long l_dynamicthreadtest0_G_backoff = 1;
+                    while (DynamicThreadTest_jmhType.tearTrialMutexUpdater.get(l_dynamicthreadtest0_G) == 1) {
+                        TimeUnit.MILLISECONDS.sleep(l_dynamicthreadtest0_G_backoff);
+                        l_dynamicthreadtest0_G_backoff = Math.max(1024, l_dynamicthreadtest0_G_backoff * 2);
+                        if (control.isFailing) throw new FailureAssistException();
+                        if (Thread.interrupted()) throw new InterruptedException();
+                    }
+                }
+                synchronized(this.getClass()) {
+                    f_dynamicthreadtest0_G = null;
+                }
             }
             res.allOps += res.measuredOps;
             int batchSize = iterationParams.getBatchSize();
@@ -171,19 +219,19 @@ public final class SerializeCompareTest_hessianSerializeTest_jmhTest {
             res.measuredOps *= opsPerInv;
             res.measuredOps /= batchSize;
             BenchmarkTaskResult results = new BenchmarkTaskResult(res.allOps, res.measuredOps);
-            results.add(new AverageTimeResult(ResultRole.PRIMARY, "hessianSerializeTest", res.measuredOps, res.getTime(), benchmarkParams.getTimeUnit()));
+            results.add(new AverageTimeResult(ResultRole.PRIMARY, "testThreadPool", res.measuredOps, res.getTime(), benchmarkParams.getTimeUnit()));
             this.blackhole.evaporate("Yes, I am Stephen Hawking, and know a thing or two about black holes.");
             return results;
         } else
             throw new IllegalStateException("Harness failed to distribute threads among groups properly");
     }
 
-    public static void hessianSerializeTest_avgt_jmhStub(InfraControl control, RawResults result, BenchmarkParams benchmarkParams, IterationParams iterationParams, ThreadParams threadParams, Blackhole blackhole, Control notifyControl, int startRndMask, SerializeCompareTest_jmhType l_serializecomparetest0_0) throws Throwable {
+    public static void testThreadPool_avgt_jmhStub(InfraControl control, RawResults result, BenchmarkParams benchmarkParams, IterationParams iterationParams, ThreadParams threadParams, Blackhole blackhole, Control notifyControl, int startRndMask, DynamicThreadTest_jmhType l_dynamicthreadtest0_G) throws Throwable {
         long operations = 0;
         long realTime = 0;
         result.startTime = System.nanoTime();
         do {
-            l_serializecomparetest0_0.hessianSerializeTest();
+            l_dynamicthreadtest0_G.testThreadPool();
             operations++;
         } while(!control.isDone);
         result.stopTime = System.nanoTime();
@@ -192,7 +240,7 @@ public final class SerializeCompareTest_hessianSerializeTest_jmhTest {
     }
 
 
-    public BenchmarkTaskResult hessianSerializeTest_SampleTime(InfraControl control, ThreadParams threadParams) throws Throwable {
+    public BenchmarkTaskResult testThreadPool_SampleTime(InfraControl control, ThreadParams threadParams) throws Throwable {
         this.benchmarkParams = control.benchmarkParams;
         this.iterationParams = control.iterationParams;
         this.threadParams    = threadParams;
@@ -202,14 +250,14 @@ public final class SerializeCompareTest_hessianSerializeTest_jmhTest {
         }
         if (threadParams.getSubgroupIndex() == 0) {
             RawResults res = new RawResults();
-            SerializeCompareTest_jmhType l_serializecomparetest0_0 = _jmh_tryInit_f_serializecomparetest0_0(control);
+            DynamicThreadTest_jmhType l_dynamicthreadtest0_G = _jmh_tryInit_f_dynamicthreadtest0_G(control);
 
             control.preSetup();
 
 
             control.announceWarmupReady();
             while (control.warmupShouldWait) {
-                l_serializecomparetest0_0.hessianSerializeTest();
+                l_dynamicthreadtest0_G.testThreadPool();
                 res.allOps++;
             }
 
@@ -218,12 +266,12 @@ public final class SerializeCompareTest_hessianSerializeTest_jmhTest {
             int batchSize = iterationParams.getBatchSize();
             int opsPerInv = benchmarkParams.getOpsPerInvocation();
             SampleBuffer buffer = new SampleBuffer();
-            hessianSerializeTest_sample_jmhStub(control, res, benchmarkParams, iterationParams, threadParams, blackhole, notifyControl, startRndMask, buffer, targetSamples, opsPerInv, batchSize, l_serializecomparetest0_0);
+            testThreadPool_sample_jmhStub(control, res, benchmarkParams, iterationParams, threadParams, blackhole, notifyControl, startRndMask, buffer, targetSamples, opsPerInv, batchSize, l_dynamicthreadtest0_G);
             notifyControl.stopMeasurement = true;
             control.announceWarmdownReady();
             try {
                 while (control.warmdownShouldWait) {
-                    l_serializecomparetest0_0.hessianSerializeTest();
+                    l_dynamicthreadtest0_G.testThreadPool();
                     res.allOps++;
                 }
                 control.preTearDown();
@@ -232,21 +280,45 @@ public final class SerializeCompareTest_hessianSerializeTest_jmhTest {
             }
 
             if (control.isLastIteration()) {
-                f_serializecomparetest0_0 = null;
+                if (DynamicThreadTest_jmhType.tearTrialMutexUpdater.compareAndSet(l_dynamicthreadtest0_G, 0, 1)) {
+                    try {
+                        if (control.isFailing) throw new FailureAssistException();
+                        if (l_dynamicthreadtest0_G.readyTrial) {
+                            l_dynamicthreadtest0_G.cleanUp();
+                            l_dynamicthreadtest0_G.readyTrial = false;
+                        }
+                    } catch (Throwable t) {
+                        control.isFailing = true;
+                        throw t;
+                    } finally {
+                        DynamicThreadTest_jmhType.tearTrialMutexUpdater.set(l_dynamicthreadtest0_G, 0);
+                    }
+                } else {
+                    long l_dynamicthreadtest0_G_backoff = 1;
+                    while (DynamicThreadTest_jmhType.tearTrialMutexUpdater.get(l_dynamicthreadtest0_G) == 1) {
+                        TimeUnit.MILLISECONDS.sleep(l_dynamicthreadtest0_G_backoff);
+                        l_dynamicthreadtest0_G_backoff = Math.max(1024, l_dynamicthreadtest0_G_backoff * 2);
+                        if (control.isFailing) throw new FailureAssistException();
+                        if (Thread.interrupted()) throw new InterruptedException();
+                    }
+                }
+                synchronized(this.getClass()) {
+                    f_dynamicthreadtest0_G = null;
+                }
             }
             res.allOps += res.measuredOps * batchSize;
             res.allOps *= opsPerInv;
             res.allOps /= batchSize;
             res.measuredOps *= opsPerInv;
             BenchmarkTaskResult results = new BenchmarkTaskResult(res.allOps, res.measuredOps);
-            results.add(new SampleTimeResult(ResultRole.PRIMARY, "hessianSerializeTest", buffer, benchmarkParams.getTimeUnit()));
+            results.add(new SampleTimeResult(ResultRole.PRIMARY, "testThreadPool", buffer, benchmarkParams.getTimeUnit()));
             this.blackhole.evaporate("Yes, I am Stephen Hawking, and know a thing or two about black holes.");
             return results;
         } else
             throw new IllegalStateException("Harness failed to distribute threads among groups properly");
     }
 
-    public static void hessianSerializeTest_sample_jmhStub(InfraControl control, RawResults result, BenchmarkParams benchmarkParams, IterationParams iterationParams, ThreadParams threadParams, Blackhole blackhole, Control notifyControl, int startRndMask, SampleBuffer buffer, int targetSamples, long opsPerInv, int batchSize, SerializeCompareTest_jmhType l_serializecomparetest0_0) throws Throwable {
+    public static void testThreadPool_sample_jmhStub(InfraControl control, RawResults result, BenchmarkParams benchmarkParams, IterationParams iterationParams, ThreadParams threadParams, Blackhole blackhole, Control notifyControl, int startRndMask, SampleBuffer buffer, int targetSamples, long opsPerInv, int batchSize, DynamicThreadTest_jmhType l_dynamicthreadtest0_G) throws Throwable {
         long realTime = 0;
         long operations = 0;
         int rnd = (int)System.nanoTime();
@@ -261,7 +333,7 @@ public final class SerializeCompareTest_hessianSerializeTest_jmhTest {
             }
             for (int b = 0; b < batchSize; b++) {
                 if (control.volatileSpoiler) return;
-                l_serializecomparetest0_0.hessianSerializeTest();
+                l_dynamicthreadtest0_G.testThreadPool();
             }
             if (sample) {
                 buffer.add((System.nanoTime() - time) / opsPerInv);
@@ -279,7 +351,7 @@ public final class SerializeCompareTest_hessianSerializeTest_jmhTest {
     }
 
 
-    public BenchmarkTaskResult hessianSerializeTest_SingleShotTime(InfraControl control, ThreadParams threadParams) throws Throwable {
+    public BenchmarkTaskResult testThreadPool_SingleShotTime(InfraControl control, ThreadParams threadParams) throws Throwable {
         this.benchmarkParams = control.benchmarkParams;
         this.iterationParams = control.iterationParams;
         this.threadParams    = threadParams;
@@ -288,7 +360,7 @@ public final class SerializeCompareTest_hessianSerializeTest_jmhTest {
             this.blackhole = new Blackhole("Today's password is swordfish. I understand instantiating Blackholes directly is dangerous.");
         }
         if (threadParams.getSubgroupIndex() == 0) {
-            SerializeCompareTest_jmhType l_serializecomparetest0_0 = _jmh_tryInit_f_serializecomparetest0_0(control);
+            DynamicThreadTest_jmhType l_dynamicthreadtest0_G = _jmh_tryInit_f_dynamicthreadtest0_G(control);
 
             control.preSetup();
 
@@ -296,42 +368,80 @@ public final class SerializeCompareTest_hessianSerializeTest_jmhTest {
             notifyControl.startMeasurement = true;
             RawResults res = new RawResults();
             int batchSize = iterationParams.getBatchSize();
-            hessianSerializeTest_ss_jmhStub(control, res, benchmarkParams, iterationParams, threadParams, blackhole, notifyControl, startRndMask, batchSize, l_serializecomparetest0_0);
+            testThreadPool_ss_jmhStub(control, res, benchmarkParams, iterationParams, threadParams, blackhole, notifyControl, startRndMask, batchSize, l_dynamicthreadtest0_G);
             control.preTearDown();
 
             if (control.isLastIteration()) {
-                f_serializecomparetest0_0 = null;
+                if (DynamicThreadTest_jmhType.tearTrialMutexUpdater.compareAndSet(l_dynamicthreadtest0_G, 0, 1)) {
+                    try {
+                        if (control.isFailing) throw new FailureAssistException();
+                        if (l_dynamicthreadtest0_G.readyTrial) {
+                            l_dynamicthreadtest0_G.cleanUp();
+                            l_dynamicthreadtest0_G.readyTrial = false;
+                        }
+                    } catch (Throwable t) {
+                        control.isFailing = true;
+                        throw t;
+                    } finally {
+                        DynamicThreadTest_jmhType.tearTrialMutexUpdater.set(l_dynamicthreadtest0_G, 0);
+                    }
+                } else {
+                    long l_dynamicthreadtest0_G_backoff = 1;
+                    while (DynamicThreadTest_jmhType.tearTrialMutexUpdater.get(l_dynamicthreadtest0_G) == 1) {
+                        TimeUnit.MILLISECONDS.sleep(l_dynamicthreadtest0_G_backoff);
+                        l_dynamicthreadtest0_G_backoff = Math.max(1024, l_dynamicthreadtest0_G_backoff * 2);
+                        if (control.isFailing) throw new FailureAssistException();
+                        if (Thread.interrupted()) throw new InterruptedException();
+                    }
+                }
+                synchronized(this.getClass()) {
+                    f_dynamicthreadtest0_G = null;
+                }
             }
             int opsPerInv = control.benchmarkParams.getOpsPerInvocation();
             long totalOps = opsPerInv;
             BenchmarkTaskResult results = new BenchmarkTaskResult(totalOps, totalOps);
-            results.add(new SingleShotResult(ResultRole.PRIMARY, "hessianSerializeTest", res.getTime(), benchmarkParams.getTimeUnit()));
+            results.add(new SingleShotResult(ResultRole.PRIMARY, "testThreadPool", res.getTime(), benchmarkParams.getTimeUnit()));
             this.blackhole.evaporate("Yes, I am Stephen Hawking, and know a thing or two about black holes.");
             return results;
         } else
             throw new IllegalStateException("Harness failed to distribute threads among groups properly");
     }
 
-    public static void hessianSerializeTest_ss_jmhStub(InfraControl control, RawResults result, BenchmarkParams benchmarkParams, IterationParams iterationParams, ThreadParams threadParams, Blackhole blackhole, Control notifyControl, int startRndMask, int batchSize, SerializeCompareTest_jmhType l_serializecomparetest0_0) throws Throwable {
+    public static void testThreadPool_ss_jmhStub(InfraControl control, RawResults result, BenchmarkParams benchmarkParams, IterationParams iterationParams, ThreadParams threadParams, Blackhole blackhole, Control notifyControl, int startRndMask, int batchSize, DynamicThreadTest_jmhType l_dynamicthreadtest0_G) throws Throwable {
         long realTime = 0;
         result.startTime = System.nanoTime();
         for (int b = 0; b < batchSize; b++) {
             if (control.volatileSpoiler) return;
-            l_serializecomparetest0_0.hessianSerializeTest();
+            l_dynamicthreadtest0_G.testThreadPool();
         }
         result.stopTime = System.nanoTime();
         result.realTime = realTime;
     }
 
     
-    SerializeCompareTest_jmhType f_serializecomparetest0_0;
+    static volatile DynamicThreadTest_jmhType f_dynamicthreadtest0_G;
     
-    SerializeCompareTest_jmhType _jmh_tryInit_f_serializecomparetest0_0(InfraControl control) throws Throwable {
-        if (control.isFailing) throw new FailureAssistException();
-        SerializeCompareTest_jmhType val = f_serializecomparetest0_0;
-        if (val == null) {
-            val = new SerializeCompareTest_jmhType();
-            f_serializecomparetest0_0 = val;
+    DynamicThreadTest_jmhType _jmh_tryInit_f_dynamicthreadtest0_G(InfraControl control) throws Throwable {
+        DynamicThreadTest_jmhType val = f_dynamicthreadtest0_G;
+        if (val != null) {
+            return val;
+        }
+        synchronized(this.getClass()) {
+            try {
+            if (control.isFailing) throw new FailureAssistException();
+            val = f_dynamicthreadtest0_G;
+            if (val != null) {
+                return val;
+            }
+            val = new DynamicThreadTest_jmhType();
+            val.prepare();
+            val.readyTrial = true;
+            f_dynamicthreadtest0_G = val;
+            } catch (Throwable t) {
+                control.isFailing = true;
+                throw t;
+            }
         }
         return val;
     }

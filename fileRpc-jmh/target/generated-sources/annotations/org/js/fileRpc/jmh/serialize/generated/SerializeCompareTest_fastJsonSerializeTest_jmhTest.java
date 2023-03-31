@@ -1,23 +1,38 @@
 package org.js.fileRpc.jmh.serialize.generated;
 
+import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.Collection;
+import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
-
+import org.openjdk.jmh.annotations.CompilerControl;
 import org.openjdk.jmh.runner.InfraControl;
 import org.openjdk.jmh.infra.ThreadParams;
 import org.openjdk.jmh.results.BenchmarkTaskResult;
+import org.openjdk.jmh.results.Result;
 import org.openjdk.jmh.results.ThroughputResult;
 import org.openjdk.jmh.results.AverageTimeResult;
 import org.openjdk.jmh.results.SampleTimeResult;
 import org.openjdk.jmh.results.SingleShotResult;
 import org.openjdk.jmh.util.SampleBuffer;
+import org.openjdk.jmh.annotations.Mode;
+import org.openjdk.jmh.annotations.Fork;
+import org.openjdk.jmh.annotations.Measurement;
+import org.openjdk.jmh.annotations.Threads;
+import org.openjdk.jmh.annotations.Warmup;
+import org.openjdk.jmh.annotations.BenchmarkMode;
 import org.openjdk.jmh.results.RawResults;
 import org.openjdk.jmh.results.ResultRole;
+import java.lang.reflect.Field;
 import org.openjdk.jmh.infra.BenchmarkParams;
 import org.openjdk.jmh.infra.IterationParams;
 import org.openjdk.jmh.infra.Blackhole;
 import org.openjdk.jmh.infra.Control;
+import org.openjdk.jmh.results.ScalarResult;
+import org.openjdk.jmh.results.AggregationPolicy;
 import org.openjdk.jmh.runner.FailureAssistException;
 
+import org.js.fileRpc.jmh.serialize.generated.SerializeCompareTest_jmhType;
 public final class SerializeCompareTest_fastJsonSerializeTest_jmhTest {
 
     boolean p000, p001, p002, p003, p004, p005, p006, p007, p008, p009, p010, p011, p012, p013, p014, p015;

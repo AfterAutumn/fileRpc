@@ -3,6 +3,7 @@ package org.js.fileRpc.user.provider.service;
 import com.dtp.core.DtpRegistry;
 import com.dtp.core.thread.DtpExecutor;
 import org.js.fileRpc.interfaces.bean.FileMessage;
+import org.js.fileRpc.interfaces.bean.UploadTask;
 import org.js.fileRpc.interfaces.good.GoodRpcService;
 import org.js.fileRpc.interfaces.pay.PayRpcService;
 import org.js.fileRpc.interfaces.fileTransfer.FileTransferRpcService;
@@ -93,11 +94,13 @@ public class FileTransferRpcServiceImpl implements FileTransferRpcService {
     }
 
     @Override
-    public String testThread(String job) {
+    public String testThread(FileMessage message) {
         DtpExecutor dtpExecutor = DtpRegistry.getDtpExecutor("myDtpExecutor");
-        dtpExecutor.execute(() -> System.out.println("动态线程池测试"+job));
-        System.out.println("核心线程数：" + dtpExecutor.getCorePoolSize() + " " +"最大线程数：" + dtpExecutor.getMaximumPoolSize()
+        dtpExecutor.execute(() -> System.out.println("动态线程池测试"));
+        System.out.println("线程池名"+dtpExecutor.getThreadPoolName()+"  核心线程数：" + dtpExecutor.getCorePoolSize() + " " +"最大线程数：" + dtpExecutor.getMaximumPoolSize()
                 +" " + "阻塞队列数：" + dtpExecutor.getQueue().size()  +" " + "活跃线程数：" + dtpExecutor.getActiveCount());
+
+        dtpExecutor.execute(new UploadTask(message));
         return "success";
     }
 
