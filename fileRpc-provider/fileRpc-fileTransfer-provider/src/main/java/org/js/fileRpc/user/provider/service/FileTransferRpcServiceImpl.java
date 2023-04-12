@@ -10,6 +10,7 @@ import org.js.fileRpc.interfaces.fileTransfer.FileTransferRpcService;
 import org.idea.irpc.framework.spring.starter.common.IRpcReference;
 import org.idea.irpc.framework.spring.starter.common.IRpcService;
 
+import javax.annotation.Resource;
 import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -34,12 +35,14 @@ public class FileTransferRpcServiceImpl implements FileTransferRpcService {
     @IRpcReference
     private PayRpcService payRpcService;
 
+    //名字要和远程配置的线程池名称一致
+    @Resource
+    private ThreadPoolExecutor myDtpExecutor;
+
     @Override
     public String getUserId() {
         return "i am user1 service"+UUID.randomUUID().toString();
     }
-
-  /*  private  DtpExecutor dtpExecutor = DtpRegistry.getDtpExecutor("myDtpExecutor");*/
 
 
     public static final ThreadPoolExecutor threadPool = new ThreadPoolExecutor(
@@ -108,13 +111,24 @@ public class FileTransferRpcServiceImpl implements FileTransferRpcService {
         return message;
     }
 
-    @Override
+  /*  @Override
     public String testThread(FileMessage message) {
         DtpExecutor dtpExecutor = DtpRegistry.getDtpExecutor("myDtpExecutor");
         System.out.println(" 核心线程数：" + dtpExecutor.getCorePoolSize() + " " +"最大线程数：" + dtpExecutor.getMaximumPoolSize()
                 +" " + "阻塞队列数：" + dtpExecutor.getQueue().size()  +" " + "活跃线程数：" + dtpExecutor.getActiveCount());
 
         dtpExecutor.execute(new UploadTask(message));
+        return "success";
+    }*/
+
+
+    //测试注解方式引入
+    @Override
+    public String testThread(FileMessage message) {
+        System.out.println(" 核心线程数：" + myDtpExecutor.getCorePoolSize() + " " +"最大线程数：" + myDtpExecutor.getMaximumPoolSize()
+                +" " + "阻塞队列数：" + myDtpExecutor.getQueue().size()  +" " + "活跃线程数：" + myDtpExecutor.getActiveCount());
+
+        myDtpExecutor.execute(new UploadTask(message));
         return "success";
     }
 
