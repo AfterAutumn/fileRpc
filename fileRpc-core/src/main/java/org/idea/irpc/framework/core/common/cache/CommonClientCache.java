@@ -6,7 +6,7 @@ import org.idea.irpc.framework.core.protocol.RpcInvocation;
 import org.idea.irpc.framework.core.common.config.ClientConfig;
 import org.idea.irpc.framework.core.filter.client.ClientFilterChain;
 import org.idea.irpc.framework.core.registy.URL;
-import org.idea.irpc.framework.core.registy.zookeeper.AbstractRegister;
+import org.idea.irpc.framework.core.registy.AbstractRegister;
 import org.idea.irpc.framework.core.router.IRouter;
 import org.idea.irpc.framework.core.serialize.SerializeFactory;
 import org.idea.irpc.framework.core.spi.ExtensionLoader;
@@ -18,10 +18,9 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
 
 /**
- * 公用缓存 存储请求队列等公共信息
+ * 客户端公用缓存 存储请求队列等公共信息
  *
  * @Author jiangshang
- * @Date created in 8:44 下午 2021/12/1
  */
 public class CommonClientCache {
 

@@ -7,8 +7,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * 注册中心总体配置
  * @Author jiangshang
- * @Date created in 3:48 下午 2021/12/11
  */
 public class URL {
 

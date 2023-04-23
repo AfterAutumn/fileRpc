@@ -13,7 +13,7 @@ public class ClientConfig {
     private String registerType;
 
     /**
-     * 代理类型 example: jdk,javassist
+     * 代理类型 example: jdk
      */
     private String proxyType;
 

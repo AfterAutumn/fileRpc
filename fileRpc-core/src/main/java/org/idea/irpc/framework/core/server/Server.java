@@ -24,7 +24,7 @@ import org.idea.irpc.framework.core.filter.server.ServerAfterFilterChain;
 import org.idea.irpc.framework.core.filter.server.ServerBeforeFilterChain;
 import org.idea.irpc.framework.core.registy.RegistryService;
 import org.idea.irpc.framework.core.registy.URL;
-import org.idea.irpc.framework.core.registy.zookeeper.AbstractRegister;
+import org.idea.irpc.framework.core.registy.AbstractRegister;
 import org.idea.irpc.framework.core.serialize.SerializeFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

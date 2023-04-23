@@ -1,4 +1,4 @@
-package org.idea.irpc.framework.core.registy.zookeeper;
+package org.idea.irpc.framework.core.registy;
 
 import org.idea.irpc.framework.core.registy.RegistryService;
 import org.idea.irpc.framework.core.registy.URL;
@@ -32,14 +32,13 @@ public abstract class AbstractRegister implements RegistryService {
     }
 
     /**
-     * 留给子类扩展
-     *
+     *订阅服务后可自定义做些扩展
      * @param url
      */
     public abstract void doAfterSubscribe(URL url);
 
     /**
-     * 留给子类扩展
+     * 订阅服务前可自定义做些扩展
      *
      * @param url
      */

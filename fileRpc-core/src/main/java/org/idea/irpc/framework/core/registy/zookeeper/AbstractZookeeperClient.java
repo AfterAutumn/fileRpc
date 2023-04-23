@@ -5,8 +5,8 @@ import org.apache.zookeeper.Watcher;
 import java.util.List;
 
 /**
+ * 操作Zookeeper的方法
  * @Author jiangshang
- * @Date created in 3:58 下午 2021/12/11
  */
 public abstract class AbstractZookeeperClient {
 

@@ -9,6 +9,7 @@ import org.idea.irpc.framework.core.common.event.IRpcNodeChangeEvent;
 import org.idea.irpc.framework.core.common.event.IRpcUpdateEvent;
 import org.idea.irpc.framework.core.common.event.data.URLChangeWrapper;
 import org.idea.irpc.framework.core.common.utils.CommonUtils;
+import org.idea.irpc.framework.core.registy.AbstractRegister;
 import org.idea.irpc.framework.core.registy.RegistryService;
 import org.idea.irpc.framework.core.registy.URL;
 
@@ -22,13 +23,13 @@ import static org.idea.irpc.framework.core.common.cache.CommonServerCache.SERVER
 
 /**
  * @Author jiangshang
- * @Date created in 4:44 下午 2021/12/11
  */
 public class ZookeeperRegister extends AbstractRegister implements RegistryService {
 
     private AbstractZookeeperClient zkClient;
 
-    private String ROOT = "/irpc";
+    //设置根节点名称
+    private String ROOT = "/fileRpc";
 
     public AbstractZookeeperClient getZkClient() {
         return zkClient;
@@ -38,6 +39,7 @@ public class ZookeeperRegister extends AbstractRegister implements RegistryServi
         this.zkClient = zkClient;
     }
 
+    //获取服务提供者的路径
     private String getProviderPath(URL url) {
         return ROOT + "/" + url.getServiceName() + "/provider/" + url.getParameters().get("host") + ":" + url.getParameters().get("port");
     }

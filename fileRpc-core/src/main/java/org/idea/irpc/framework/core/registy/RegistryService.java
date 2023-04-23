@@ -1,19 +1,16 @@
 package org.idea.irpc.framework.core.registy;
 
 /**
+ * 服务注册中心
  * @Author jiangshang
- * @Date created in 11:26 上午 2021/12/11
  */
 public interface RegistryService {
 
-
     /**
      * 注册url
-     *
      * 将irpc服务写入注册中心节点
      * 当出现网络抖动的时候需要进行适当的重试做法
      * 注册服务url的时候需要写入持久化文件中
-     *
      * @param url
      */
     void register(URL url);
