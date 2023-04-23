@@ -1,6 +1,6 @@
 package org.idea.irpc.framework.core.filter;
 
-import org.idea.irpc.framework.core.common.RpcInvocation;
+import org.idea.irpc.framework.core.protocol.RpcInvocation;
 
 
 /**

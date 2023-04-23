@@ -1,12 +1,10 @@
 package org.idea.irpc.framework.core.client;
 
-import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.util.ReferenceCountUtil;
-import io.netty.util.internal.StringUtil;
-import org.idea.irpc.framework.core.common.RpcInvocation;
-import org.idea.irpc.framework.core.common.RpcProtocol;
+import org.idea.irpc.framework.core.protocol.RpcInvocation;
+import org.idea.irpc.framework.core.protocol.fileRpcProtocol;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,8 +21,8 @@ public class ClientHandler extends ChannelInboundHandlerAdapter {
 
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) {
-        RpcProtocol rpcProtocol = (RpcProtocol) msg;
-        byte[] reqContent = rpcProtocol.getContent();
+        fileRpcProtocol fileRpcProtocol = (fileRpcProtocol) msg;
+        byte[] reqContent = fileRpcProtocol.getContent();
         RpcInvocation rpcInvocation = CLIENT_SERIALIZE_FACTORY.deserialize(reqContent, RpcInvocation.class);
         if (rpcInvocation.getE() != null) {
             rpcInvocation.getE().printStackTrace();

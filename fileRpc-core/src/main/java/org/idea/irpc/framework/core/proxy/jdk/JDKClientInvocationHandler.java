@@ -1,7 +1,7 @@
 package org.idea.irpc.framework.core.proxy.jdk;
 
 import org.idea.irpc.framework.core.client.RpcReferenceWrapper;
-import org.idea.irpc.framework.core.common.RpcInvocation;
+import org.idea.irpc.framework.core.protocol.RpcInvocation;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;

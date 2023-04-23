@@ -1,6 +1,6 @@
 package org.idea.irpc.framework.core.common.exception;
 
-import org.idea.irpc.framework.core.common.RpcInvocation;
+import org.idea.irpc.framework.core.protocol.RpcInvocation;
 
 /**
  * @Author jiangshang

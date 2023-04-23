@@ -1,6 +1,6 @@
 package org.idea.irpc.framework.core.filter.server;
 
-import org.idea.irpc.framework.core.common.RpcInvocation;
+import org.idea.irpc.framework.core.protocol.RpcInvocation;
 import org.idea.irpc.framework.core.common.ServerServiceSemaphoreWrapper;
 import org.idea.irpc.framework.core.common.annotations.SPI;
 import org.idea.irpc.framework.core.filter.IServerFilter;

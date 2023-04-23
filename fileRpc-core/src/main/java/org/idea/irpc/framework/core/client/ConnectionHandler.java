@@ -5,7 +5,7 @@ import com.esotericsoftware.minlog.Log;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelFuture;
 import org.idea.irpc.framework.core.common.ChannelFutureWrapper;
-import org.idea.irpc.framework.core.common.RpcInvocation;
+import org.idea.irpc.framework.core.protocol.RpcInvocation;
 import org.idea.irpc.framework.core.common.utils.CommonUtils;
 import org.idea.irpc.framework.core.registy.URL;
 import org.idea.irpc.framework.core.registy.zookeeper.ProviderNodeInfo;

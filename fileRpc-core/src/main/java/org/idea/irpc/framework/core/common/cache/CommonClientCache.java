@@ -2,7 +2,7 @@ package org.idea.irpc.framework.core.common.cache;
 
 import org.idea.irpc.framework.core.common.ChannelFuturePollingRef;
 import org.idea.irpc.framework.core.common.ChannelFutureWrapper;
-import org.idea.irpc.framework.core.common.RpcInvocation;
+import org.idea.irpc.framework.core.protocol.RpcInvocation;
 import org.idea.irpc.framework.core.common.config.ClientConfig;
 import org.idea.irpc.framework.core.filter.client.ClientFilterChain;
 import org.idea.irpc.framework.core.registy.URL;

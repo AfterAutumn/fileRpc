@@ -1,7 +1,7 @@
 package org.idea.irpc.framework.core.dispatcher;
 
-import org.idea.irpc.framework.core.common.RpcInvocation;
-import org.idea.irpc.framework.core.common.RpcProtocol;
+import org.idea.irpc.framework.core.protocol.RpcInvocation;
+import org.idea.irpc.framework.core.protocol.fileRpcProtocol;
 import org.idea.irpc.framework.core.common.exception.IRpcException;
 import org.idea.irpc.framework.core.server.NamedThreadFactory;
 import org.idea.irpc.framework.core.server.ServerChannelReadData;
@@ -48,8 +48,8 @@ public class ServerChannelDispatcher {
                     executorService.execute(new Runnable() {
                         @Override
                         public void run() {
-                            RpcProtocol rpcProtocol = serverChannelReadData.getRpcProtocol();
-                            RpcInvocation rpcInvocation = SERVER_SERIALIZE_FACTORY.deserialize(rpcProtocol.getContent(), RpcInvocation.class);
+                            fileRpcProtocol fileRpcProtocol = serverChannelReadData.getRpcProtocol();
+                            RpcInvocation rpcInvocation = SERVER_SERIALIZE_FACTORY.deserialize(fileRpcProtocol.getContent(), RpcInvocation.class);
                             //执行过滤链路
                             try {
                                 //前置过滤器
@@ -61,8 +61,8 @@ public class ServerChannelDispatcher {
                                     RpcInvocation reqParam = rpcException.getRpcInvocation();
                                     rpcInvocation.setE(rpcException);
                                     byte[] body = SERVER_SERIALIZE_FACTORY.serialize(reqParam);
-                                    RpcProtocol respRpcProtocol = new RpcProtocol(body);
-                                    serverChannelReadData.getChannelHandlerContext().writeAndFlush(respRpcProtocol);
+                                    fileRpcProtocol respFileRpcProtocol = new fileRpcProtocol(body);
+                                    serverChannelReadData.getChannelHandlerContext().writeAndFlush(respFileRpcProtocol);
                                     return;
                                 }
                             }
@@ -93,8 +93,8 @@ public class ServerChannelDispatcher {
                             rpcInvocation.setResponse(result);
                             //后置过滤器
                             SERVER_AFTER_FILTER_CHAIN.doFilter(rpcInvocation);
-                            RpcProtocol respRpcProtocol = new RpcProtocol(SERVER_SERIALIZE_FACTORY.serialize(rpcInvocation));
-                            serverChannelReadData.getChannelHandlerContext().writeAndFlush(respRpcProtocol);
+                            fileRpcProtocol respFileRpcProtocol = new fileRpcProtocol(SERVER_SERIALIZE_FACTORY.serialize(rpcInvocation));
+                            serverChannelReadData.getChannelHandlerContext().writeAndFlush(respFileRpcProtocol);
                         }
                     });
                 } catch (Exception e) {

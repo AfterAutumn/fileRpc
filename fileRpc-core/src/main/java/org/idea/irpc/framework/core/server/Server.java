@@ -6,14 +6,13 @@ import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelOption;
 import io.netty.channel.EventLoopGroup;
-import io.netty.channel.epoll.EpollEventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.handler.codec.DelimiterBasedFrameDecoder;
 import io.netty.util.concurrent.DefaultThreadFactory;
-import org.idea.irpc.framework.core.common.RpcDecoder;
-import org.idea.irpc.framework.core.common.RpcEncoder;
+import org.idea.irpc.framework.core.protocol.fileRpcDecoder;
+import org.idea.irpc.framework.core.protocol.fileRpcEncoder;
 import org.idea.irpc.framework.core.common.ServerServiceSemaphoreWrapper;
 import org.idea.irpc.framework.core.common.annotations.SPI;
 import org.idea.irpc.framework.core.common.config.PropertiesBootstrap;
@@ -92,8 +91,8 @@ public class Server {
                 LOGGER.info("初始化provider过程");
                 ByteBuf delimiter = Unpooled.copiedBuffer(DEFAULT_DECODE_CHAR.getBytes());
                 ch.pipeline().addLast(new DelimiterBasedFrameDecoder(serverConfig.getMaxServerRequestData(), delimiter));
-                ch.pipeline().addLast(new RpcEncoder());
-                ch.pipeline().addLast(new RpcDecoder());
+                ch.pipeline().addLast(new fileRpcEncoder());
+                ch.pipeline().addLast(new fileRpcDecoder());
                 //这里面需要注意出现堵塞的情况发生，建议将核心业务内容分配给业务线程池处理
                 ch.pipeline().addLast(new ServerHandler());
             }

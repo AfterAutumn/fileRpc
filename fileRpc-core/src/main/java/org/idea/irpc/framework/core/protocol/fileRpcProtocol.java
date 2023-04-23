@@ -1,4 +1,4 @@
-package org.idea.irpc.framework.core.common;
+package org.idea.irpc.framework.core.protocol;
 
 import java.io.Serializable;
 import java.util.Arrays;
@@ -6,20 +6,29 @@ import java.util.Arrays;
 import static org.idea.irpc.framework.core.common.constants.RpcConstants.MAGIC_NUMBER;
 
 /**
+ * 文件传输框架的自定义协议
  * @Author jiangshang
- * @Date created in 9:48 上午 2021/12/4
  */
-public class RpcProtocol implements Serializable {
+public class fileRpcProtocol implements Serializable {
 
     private static final long serialVersionUID = 5359096060555795690L;
 
+    /**
+     * 魔法数，用于安全检测，确认请求的协议是否合法。
+     */
     private short magicNumber = MAGIC_NUMBER;
 
+    /**
+     *议传输核心数据的长度
+     */
     private int contentLength;
 
+    /**
+     * 具体的传输数据  封装到fileRpcInvocation。
+     */
     private byte[] content;
 
-    public RpcProtocol(byte[] content) {
+    public fileRpcProtocol(byte[] content) {
         this.contentLength = content.length;
         this.content = content;
     }
