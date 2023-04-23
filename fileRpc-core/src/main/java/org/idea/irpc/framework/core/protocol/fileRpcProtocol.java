@@ -24,6 +24,25 @@ public class fileRpcProtocol implements Serializable {
     private int contentLength;
 
     /**
+     *数据包序号  用于大文件切片重传
+     */
+    private int packetNumber;
+
+    /**
+     * 重传标识位
+     */
+    private boolean retransmission; // 重传标识位
+    private long position; // 数据包位置
+    /**
+     * 剩余数据包数量
+     */
+    private int remainingPackets;
+    /**
+     * 数据包发送速率
+     */
+    private int sendRate;
+
+    /**
      * 具体的传输数据  封装到fileRpcInvocation。
      */
     private byte[] content;
@@ -57,10 +76,56 @@ public class fileRpcProtocol implements Serializable {
         this.content = content;
     }
 
+    public int getPacketNumber() {
+        return packetNumber;
+    }
+
+    public void setPacketNumber(int packetNumber) {
+        this.packetNumber = packetNumber;
+    }
+
+    public boolean isRetransmission() {
+        return retransmission;
+    }
+
+    public void setRetransmission(boolean retransmission) {
+        this.retransmission = retransmission;
+    }
+
+    public long getPosition() {
+        return position;
+    }
+
+    public void setPosition(long position) {
+        this.position = position;
+    }
+
+    public int getRemainingPackets() {
+        return remainingPackets;
+    }
+
+    public void setRemainingPackets(int remainingPackets) {
+        this.remainingPackets = remainingPackets;
+    }
+
+    public int getSendRate() {
+        return sendRate;
+    }
+
+    public void setSendRate(int sendRate) {
+        this.sendRate = sendRate;
+    }
+
     @Override
     public String toString() {
-        return "RpcProtocol{" +
-                "contentLength=" + contentLength +
+        return "fileRpcProtocol{" +
+                "magicNumber=" + magicNumber +
+                ", contentLength=" + contentLength +
+                ", packetNumber=" + packetNumber +
+                ", retransmission=" + retransmission +
+                ", position=" + position +
+                ", remainingPackets=" + remainingPackets +
+                ", sendRate=" + sendRate +
                 ", content=" + Arrays.toString(content) +
                 '}';
     }
