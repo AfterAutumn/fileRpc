@@ -25,8 +25,10 @@ import java.util.concurrent.atomic.AtomicLong;
  */
 public class CommonClientCache {
 
+    //请求发送队列
     public static BlockingQueue<RpcInvocation> SEND_QUEUE = new ArrayBlockingQueue(5000);
-    public static Map<String, Object> RESP_MAP = new ConcurrentHashMap<>();
+    //结果返回队列
+    public static Map<String, Object> RESPONSE_QUEUE = new ConcurrentHashMap<>();
     //provider名称 --> 该服务有哪些集群URL
     public static List<URL> SUBSCRIBE_SERVICE_LIST = new ArrayList<>();
     //com.sise.test.service -> <<ip:host,urlString>,<ip:host,urlString>,<ip:host,urlString>>

@@ -9,7 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import static org.idea.irpc.framework.core.common.cache.CommonClientCache.CLIENT_SERIALIZE_FACTORY;
-import static org.idea.irpc.framework.core.common.cache.CommonClientCache.RESP_MAP;
+import static org.idea.irpc.framework.core.common.cache.CommonClientCache.RESPONSE_QUEUE;
 
 /**
  * @Author jiangshang
@@ -33,10 +33,10 @@ public class ClientHandler extends ChannelInboundHandlerAdapter {
             ReferenceCountUtil.release(msg);
             return;
         }
-        if (!RESP_MAP.containsKey(rpcInvocation.getUuid())) {
+        if (!RESPONSE_QUEUE.containsKey(rpcInvocation.getUuid())) {
             throw new IllegalArgumentException("server response is error!");
         }
-        RESP_MAP.put(rpcInvocation.getUuid(), rpcInvocation);
+        RESPONSE_QUEUE.put(rpcInvocation.getUuid(), rpcInvocation);
     }
 
     @Override

@@ -124,7 +124,7 @@ public class ConnectionHandler {
             rpcInvocation.setE(new RuntimeException("no provider exist for " + providerServiceName));
             rpcInvocation.setResponse(null);
             //直接交给响应线程那边处理（响应线程在代理类内部的invoke函数中，那边会取出对应的uuid的值，然后判断）
-            RESP_MAP.put(rpcInvocation.getUuid(),rpcInvocation);
+            RESPONSE_QUEUE.put(rpcInvocation.getUuid(),rpcInvocation);
             Log.error("channelFutureWrapper is null");
             return null;
         }
