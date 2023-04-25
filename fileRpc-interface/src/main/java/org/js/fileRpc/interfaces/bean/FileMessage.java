@@ -1,6 +1,7 @@
 package org.js.fileRpc.interfaces.bean;
 
 import java.io.Serializable;
+import java.util.Arrays;
 
 /**
  * 文件传输封装类
@@ -53,5 +54,14 @@ public class FileMessage implements Serializable {
 
     public void setFileData(byte[] fileData) {
         this.fileData = fileData;
+    }
+
+    @Override
+    public String toString() {
+        return "FileMessage{" +
+                "fileName='" + fileName + '\'' +
+                ", fileData=" + Arrays.toString(fileData) +
+                ", fileLength=" + fileLength +
+                '}';
     }
 }

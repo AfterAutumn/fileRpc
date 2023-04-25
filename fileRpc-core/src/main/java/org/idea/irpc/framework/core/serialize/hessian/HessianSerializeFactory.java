@@ -9,44 +9,44 @@ import org.slf4j.LoggerFactory;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.util.Objects;
 
 /**
  * @Author jiangshang
- * @Date created in 6:59 下午 2023/1/17
  */
 public class HessianSerializeFactory implements SerializeFactory {
     private static final Logger LOGGER = LoggerFactory.getLogger(JdkSerializeFactory.class);
 
     @Override
-    public <T> byte[] serialize(T t) {
+    public <T> byte[] serialize(T object) {
         byte[] data = null;
         try {
-            ByteArrayOutputStream os = new ByteArrayOutputStream();
-            Hessian2Output output = new Hessian2Output(os);
-            output.writeObject(t);
+            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+            Hessian2Output output = new Hessian2Output(outputStream);
+            output.writeObject(object);
             output.getBytesOutputStream().flush();
             output.completeMessage();
             output.close();
-            data = os.toByteArray();
+            data = outputStream.toByteArray();
         } catch (Exception e) {
-            LOGGER.error("Failed to serialize object: " + t.toString(), e);
-           throw new RuntimeException(e);
+            LOGGER.error("序列化对象失败！失败的原因是: " + object.toString(), e);
+            throw new RuntimeException(e);
         }
         return data;
     }
 
     @Override
     public <T> T deserialize(byte[] data, Class<T> clazz) {
-        if (data == null) {
+        if (Objects.isNull(data)) {
             return null;
         }
         Object result = null;
         try {
-            ByteArrayInputStream is = new ByteArrayInputStream(data);
-            Hessian2Input input = new Hessian2Input(is);
+            ByteArrayInputStream inputStream = new ByteArrayInputStream(data);
+            Hessian2Input input = new Hessian2Input(inputStream);
             result = input.readObject();
         } catch (Exception e) {
-            LOGGER.error("Failed to deserialize data: " + data.toString(), e);
+            LOGGER.error("反序列化数据失败！失败的原因是： " + data.toString(), e);
             throw new RuntimeException(e);
         }
         return (T) result;

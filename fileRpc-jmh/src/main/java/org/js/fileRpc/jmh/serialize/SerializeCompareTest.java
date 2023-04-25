@@ -1,7 +1,6 @@
 package org.js.fileRpc.jmh.serialize;
 
 import org.idea.irpc.framework.core.serialize.SerializeFactory;
-import org.idea.irpc.framework.core.serialize.fastjson.FastJsonSerializeFactory;
 import org.idea.irpc.framework.core.serialize.hessian.HessianSerializeFactory;
 import org.idea.irpc.framework.core.serialize.jdk.JdkSerializeFactory;
 import org.idea.irpc.framework.core.serialize.kryo.KryoSerializeFactory;
@@ -49,13 +48,6 @@ public class SerializeCompareTest {
         User deserializeUser = serializeFactory.deserialize(result,User.class);
     }
 
-    @Benchmark
-    public void fastJsonSerializeTest(){
-        SerializeFactory serializeFactory = new FastJsonSerializeFactory();
-        User user = buildUserDefault();
-        byte[] result = serializeFactory.serialize(user);
-        User deserializeUser = serializeFactory.deserialize(result,User.class);
-    }
 
     @Benchmark
     public void kryoSerializeTest(){

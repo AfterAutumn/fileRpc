@@ -1,0 +1,9 @@
+org\js\fileRpc\interfaces\UserService.class
+org\js\fileRpc\interfaces\OrderService.class
+org\js\fileRpc\interfaces\fileTransfer\FileTransferRpcService.class
+org\js\fileRpc\interfaces\bean\UploadTask.class
+org\js\fileRpc\interfaces\DataService.class
+org\js\fileRpc\interfaces\good\GoodRpcService.class
+org\js\fileRpc\interfaces\pay\PayRpcService.class
+org\js\fileRpc\interfaces\Test.class
+org\js\fileRpc\interfaces\bean\FileMessage.class

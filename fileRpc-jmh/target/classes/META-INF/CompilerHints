@@ -6,3 +6,6 @@ dontinline,*.*_thrpt_jmhStub
 inline,org/js/fileRpc/jmh/DynamicThreadTest/DynamicThreadTest.cleanUp
 inline,org/js/fileRpc/jmh/DynamicThreadTest/DynamicThreadTest.prepare
 inline,org/js/fileRpc/jmh/DynamicThreadTest/DynamicThreadTest.testThreadPool
+inline,org/js/fileRpc/jmh/serialize/SerializeCompareTest.hessianSerializeTest
+inline,org/js/fileRpc/jmh/serialize/SerializeCompareTest.jdkSerializeTest
+inline,org/js/fileRpc/jmh/serialize/SerializeCompareTest.kryoSerializeTest

@@ -4,55 +4,63 @@ import org.idea.irpc.framework.core.serialize.SerializeFactory;
 import org.idea.irpc.framework.core.serialize.hessian.HessianSerializeFactory;
 import org.idea.irpc.framework.core.serialize.jdk.JdkSerializeFactory;
 import org.idea.irpc.framework.core.serialize.kryo.KryoSerializeFactory;
-import org.js.fileRpc.jmh.common.User;
+import org.js.fileRpc.interfaces.bean.FileMessage;
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 /**
+ * 不同序列化产生的码流大小测试
  * @Author jiangshang
- * @Date created in 5:53 下午 2023/1/20
  */
 public class SerializeByteSizeCompareTest {
 
-    private static User buildUserDefault() {
-        User user = new User();
-        user.setAge(11);
-        user.setAddress("深圳市南山区");
-        user.setBankNo(12897873624813L);
-        user.setSex(1);
-        user.setId(10001);
-        user.setIdCardNo("440308781129381222");
-        user.setRemark("备注信息字段");
-        user.setUsername("ddd-user-name");
-        return user;
+    //生成测试的文件对象
+    private static FileMessage buildFileData() throws IOException {
+        // 读取本地文件内容
+        Path filePath = Paths.get("D:\\test\\test2.txt");
+        byte[] buffer = new byte[1024];
+        int bytesRead = 0;
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        try (InputStream inputStream = Files.newInputStream(filePath)) {
+            while ((bytesRead = inputStream.read(buffer)) != -1) {
+                outputStream.write(buffer, 0, bytesRead);
+            }
+        }
+        byte[] fileData = outputStream.toByteArray();
+        return new FileMessage("test2.txt", fileData, fileData.length);
     }
 
-    public void jdkSerializeSizeTest() {
+    public void jdkSerializeTest() throws IOException {
         SerializeFactory serializeFactory = new JdkSerializeFactory();
-        User user = buildUserDefault();
-        byte[] result = serializeFactory.serialize(user);
-        System.out.println("jdk's size is "+result.length);
+        FileMessage file = buildFileData();
+        byte[] result = serializeFactory.serialize(file);
+        System.out.println("'JDK' 序列化生成的码流大小是：" + result.length);
     }
 
-    public void hessianSerializeSizeTest() {
+    public void hessianSerializeTest() throws IOException {
         SerializeFactory serializeFactory = new HessianSerializeFactory();
-        User user = buildUserDefault();
-        byte[] result = serializeFactory.serialize(user);
-        User deserializeUser = serializeFactory.deserialize(result, User.class);
-        System.out.println("hessian's size is "+result.length);
+        FileMessage file = buildFileData();
+        byte[] result = serializeFactory.serialize(file);
+        System.out.println("HESSIAN'序列化生成的码流大小是：" + result.length);
     }
 
 
-    public void kryoSerializeSizeTest() {
+    public void kryoSerializeTest() throws IOException {
         SerializeFactory serializeFactory = new KryoSerializeFactory();
-        User user = buildUserDefault();
-        byte[] result = serializeFactory.serialize(user);
-        User deserializeUser = serializeFactory.deserialize(result, User.class);
-        System.out.println("kryo's size is "+result.length);
+        FileMessage file = buildFileData();
+        byte[] result = serializeFactory.serialize(file);
+        System.out.println("KRYO' 序列化生成的码流大小是：" + result.length);
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         SerializeByteSizeCompareTest serializeByteSizeCompareTest = new SerializeByteSizeCompareTest();
-        serializeByteSizeCompareTest.jdkSerializeSizeTest();
-        serializeByteSizeCompareTest.kryoSerializeSizeTest();
-        serializeByteSizeCompareTest.hessianSerializeSizeTest();
+        serializeByteSizeCompareTest.jdkSerializeTest();
+        serializeByteSizeCompareTest.hessianSerializeTest();
+        serializeByteSizeCompareTest.kryoSerializeTest();
     }
 }
