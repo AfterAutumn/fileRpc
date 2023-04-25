@@ -3,7 +3,7 @@ package org.idea.irpc.framework.core.protocol;
 import java.io.Serializable;
 import java.util.Arrays;
 
-import static org.idea.irpc.framework.core.common.constants.RpcConstants.MAGIC_NUMBER;
+import static org.idea.irpc.framework.core.common.constance.Constance.MAGIC_NUMBER;
 
 /**
  * 文件传输框架的自定义协议

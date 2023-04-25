@@ -1,60 +1,68 @@
 package org.idea.irpc.framework.core.common.config;
 
-import io.netty.util.internal.StringUtil;
+import org.idea.irpc.framework.core.common.constance.Constance;
 import org.idea.irpc.framework.core.common.utils.CommonUtils;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Properties;
 
 /**
  * 配置加载器
- *
  * @Author jiangshang
- * @Date created in 10:39 上午 2021/12/12
  */
 public class PropertiesLoader {
 
-    private static Properties properties;
+    //使用volatile修饰属性，保证线程之间对变量的可见性。
+    private static volatile Properties properties;
 
-    private static Map<String, String> propertiesMap = new HashMap<>();
-
-    private static String DEFAULT_PROPERTIES_FILE = "irpc.properties";
+    //使用volatile修饰属性，保证线程之间对变量的可见性。
+    private static volatile Map<String, String> propertiesMap = new HashMap<>();
 
     public static void loadConfiguration() throws IOException {
-        if (properties != null) {
-            return;
+        //只有当配置不存在的时候才会重新从文件中加载
+        if (Objects.isNull(properties)) {
+            properties = new Properties();
+            //加载默认的配置文件中的项目
+            InputStream in = PropertiesLoader.class.getClassLoader().getResourceAsStream(Constance.DEFAULT_PROPERTIES_FILE);
+            properties.load(in);
         }
-        properties = new Properties();
-//        FileInputStream in = null;
-//        in = new FileInputStream(new File(DEFAULT_PROPERTIES_FILE));
-        InputStream in = PropertiesLoader.class.getClassLoader().getResourceAsStream(DEFAULT_PROPERTIES_FILE);
-        properties.load(in);
     }
 
     /**
-     * 根据键值获取配置属性
-     *
+     * 根据键值获取配置属性（返回String类型）
      * @param key
      * @return
      */
     public static String getPropertiesStr(String key) {
-        if (properties == null) {
-            return null;
+        if (properties != null && !CommonUtils.isEmpty(key)) {
+            if (!propertiesMap.containsKey(key)) {
+                String value = properties.getProperty(key);
+                propertiesMap.put(key, value);
+            }
+            return String.valueOf(propertiesMap.get(key));
         }
-        if (CommonUtils.isEmpty(key)) {
-            return null;
-        }
-        if (!propertiesMap.containsKey(key)) {
+        return null;
+    }
+
+    /**
+     * 根据键值获取配置属性，可以设置默认值（返回Integer的值）
+     */
+    public static Integer getPropertiesIntegerDefault(String key, Integer defaultVal) {
+        if (properties != null && !CommonUtils.isEmpty(key)) {
             String value = properties.getProperty(key);
-            propertiesMap.put(key, value);
+            if (value == null) {
+                value = String.valueOf(defaultVal);
+                propertiesMap.put(key, value);
+            } else if (!propertiesMap.containsKey(key)) {
+                propertiesMap.put(key, value);
+            }
+            return Integer.valueOf(value);
         }
-        return propertiesMap.get(key) == null ? null : String.valueOf(propertiesMap.get(key));
+        return defaultVal;
     }
 
     public static String getPropertiesNotBlank(String key) {
@@ -69,48 +77,5 @@ public class PropertiesLoader {
         String val = getPropertiesStr(key);
         return val == null || val.equals("") ? defaultVal : val;
     }
-
-    /**
-     * 根据键值获取配置属性
-     *
-     * @param key
-     * @return
-     */
-    public static Integer getPropertiesInteger(String key) {
-        if (properties == null) {
-            return null;
-        }
-        if (CommonUtils.isEmpty(key)) {
-            return null;
-        }
-        if (!propertiesMap.containsKey(key)) {
-            String value = properties.getProperty(key);
-            propertiesMap.put(key, value);
-        }
-        return Integer.valueOf(propertiesMap.get(key));
-    }
-
-    /**
-     * 根据键值获取配置属性
-     *
-     * @param key
-     * @return
-     */
-    public static Integer getPropertiesIntegerDefault(String key,Integer defaultVal) {
-        if (properties == null) {
-            return defaultVal;
-        }
-        if (CommonUtils.isEmpty(key)) {
-            return defaultVal;
-        }
-        String value = properties.getProperty(key);
-        if(value==null){
-            propertiesMap.put(key, String.valueOf(defaultVal));
-            return defaultVal;
-        }
-        if (!propertiesMap.containsKey(key)) {
-            propertiesMap.put(key, value);
-        }
-        return Integer.valueOf(propertiesMap.get(key));
-    }
 }
+

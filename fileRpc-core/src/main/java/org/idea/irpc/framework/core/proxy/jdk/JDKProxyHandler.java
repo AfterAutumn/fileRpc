@@ -10,7 +10,7 @@ import java.util.concurrent.TimeoutException;
 
 import static org.idea.irpc.framework.core.common.cache.CommonClientCache.RESPONSE_QUEUE;
 import static org.idea.irpc.framework.core.common.cache.CommonClientCache.SEND_QUEUE;
-import static org.idea.irpc.framework.core.common.constants.RpcConstants.DEFAULT_TIMEOUT;
+import static org.idea.irpc.framework.core.common.constance.Constance.DEFAULT_TIMEOUT;
 
 /**
  * JDK动态代理具体实现类

@@ -4,7 +4,7 @@ import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToByteEncoder;
 
-import static org.idea.irpc.framework.core.common.constants.RpcConstants.DEFAULT_DECODE_CHAR;
+import static org.idea.irpc.framework.core.common.constance.Constance.DEFAULT_DECODE_CHAR;
 
 /**
  * RPC编码器   客户端发起请求的时候会通过此类进行编码

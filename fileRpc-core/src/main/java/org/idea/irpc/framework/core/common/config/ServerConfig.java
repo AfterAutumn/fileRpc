@@ -1,8 +1,8 @@
 package org.idea.irpc.framework.core.common.config;
 
 /**
+ * 服务端配置
  * @Author jiangshang
- * @Date created in 10:40 上午 2021/12/11
  */
 public class ServerConfig {
 

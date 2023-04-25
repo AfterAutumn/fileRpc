@@ -2,11 +2,11 @@ package org.idea.irpc.framework.core.common.config;
 
 import java.io.IOException;
 
-import static org.idea.irpc.framework.core.common.constants.RpcConstants.*;
+import static org.idea.irpc.framework.core.common.constance.Constance.*;
 
 /**
+ * 服务配置初始化
  * @Author jiangshang
- * @Date created in 10:46 上午 2021/12/12
  */
 public class PropertiesBootstrap {
 
@@ -39,7 +39,7 @@ public class PropertiesBootstrap {
             throw new RuntimeException("loadServerConfigFromLocal fail,e is {}", e);
         }
         ServerConfig serverConfig = new ServerConfig();
-        serverConfig.setServerPort(PropertiesLoader.getPropertiesInteger(SERVER_PORT));
+        serverConfig.setServerPort(Integer.valueOf(PropertiesLoader.getPropertiesStr(SERVER_PORT)));
         serverConfig.setApplicationName(PropertiesLoader.getPropertiesStr(APPLICATION_NAME));
         serverConfig.setRegisterAddr(PropertiesLoader.getPropertiesStr(REGISTER_ADDRESS));
         serverConfig.setRegisterType(PropertiesLoader.getPropertiesStr(REGISTER_TYPE));

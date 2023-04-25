@@ -6,7 +6,7 @@ import io.netty.handler.codec.ByteToMessageDecoder;
 
 import java.util.List;
 
-import static org.idea.irpc.framework.core.common.constants.RpcConstants.MAGIC_NUMBER;
+import static org.idea.irpc.framework.core.common.constance.Constance.MAGIC_NUMBER;
 
 /**
  * RPC解码器   实现解码的过程中需要考虑是否会有粘包拆包的问题；

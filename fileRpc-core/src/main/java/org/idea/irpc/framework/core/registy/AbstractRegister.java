@@ -31,6 +31,11 @@ public abstract class AbstractRegister implements RegistryService {
         SUBSCRIBE_SERVICE_LIST.add(url);
     }
 
+    @Override
+    public void doUnSubscribe(URL url) {
+        SUBSCRIBE_SERVICE_LIST.remove(url.getServiceName());
+    }
+
     /**
      *订阅服务后可自定义做些扩展
      * @param url
@@ -60,8 +65,4 @@ public abstract class AbstractRegister implements RegistryService {
      */
     public abstract Map<String, String> getServiceWeightMap(String serviceName);
 
-    @Override
-    public void doUnSubscribe(URL url) {
-        SUBSCRIBE_SERVICE_LIST.remove(url.getServiceName());
-    }
 }

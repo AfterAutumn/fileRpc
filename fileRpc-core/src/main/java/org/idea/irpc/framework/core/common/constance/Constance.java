@@ -1,12 +1,13 @@
-package org.idea.irpc.framework.core.common.constants;
+package org.idea.irpc.framework.core.common.constance;
 
 /**
+ * 框架中用到的常量
+ *
  * @Author jiangshang
- * @Date created in 9:49 上午 2021/12/4
  */
-public class RpcConstants {
+public class Constance {
 
-    public static final short MAGIC_NUMBER=19812;
+    public static final short MAGIC_NUMBER = 19812;
 
     public static final String JDK_PROXY_TYPE = "jdk";
 
@@ -37,5 +38,7 @@ public class RpcConstants {
     public static final int SERVER_DEFAULT_MSG_LENGTH = 1024 * 10;
 
     public static final int CLIENT_DEFAULT_MSG_LENGTH = 1024 * 10;
+
+    public static final String DEFAULT_PROPERTIES_FILE = "fileRpc.properties";
 
 }

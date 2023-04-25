@@ -36,12 +36,12 @@ import java.util.concurrent.ThreadFactory;
 
 import static org.idea.irpc.framework.core.common.cache.CommonClientCache.EXTENSION_LOADER;
 import static org.idea.irpc.framework.core.common.cache.CommonServerCache.*;
-import static org.idea.irpc.framework.core.common.constants.RpcConstants.*;
+import static org.idea.irpc.framework.core.common.constance.Constance.*;
 import static org.idea.irpc.framework.core.spi.ExtensionLoader.EXTENSION_LOADER_CLASS_CACHE;
 
 /**
+ * 服务端
  * @Author jiangshang
- * @Date created in 8:12 上午 2021/11/29
  */
 public class Server {
 
@@ -66,7 +66,7 @@ public class Server {
 
     public void startApplication() throws InterruptedException {
         bossGroup = new NioEventLoopGroup();
-        ThreadFactory threadFactory = new DefaultThreadFactory("irpc-NettyServerWorker", true);
+        ThreadFactory threadFactory = new DefaultThreadFactory("fileRpc-NettyServerWorker", true);
         int core = Runtime.getRuntime().availableProcessors() + 1;
         System.out.println("core is " + core);
         workerGroup = new NioEventLoopGroup(Math.min(core, 32), threadFactory);

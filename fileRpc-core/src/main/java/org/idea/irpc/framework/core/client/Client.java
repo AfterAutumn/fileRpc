@@ -39,7 +39,7 @@ import java.util.Map;
 import java.util.concurrent.atomic.AtomicLong;
 
 import static org.idea.irpc.framework.core.common.cache.CommonClientCache.*;
-import static org.idea.irpc.framework.core.common.constants.RpcConstants.DEFAULT_DECODE_CHAR;
+import static org.idea.irpc.framework.core.common.constance.Constance.DEFAULT_DECODE_CHAR;
 import static org.idea.irpc.framework.core.spi.ExtensionLoader.EXTENSION_LOADER_CLASS_CACHE;
 
 /**
