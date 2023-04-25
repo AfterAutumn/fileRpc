@@ -4,9 +4,13 @@ import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.io.Input;
 import com.esotericsoftware.kryo.io.Output;
 import org.idea.irpc.framework.core.serialize.SerializeFactory;
+import org.idea.irpc.framework.core.serialize.jdk.JdkSerializeFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 
 /**
  * kryo序列化工厂
@@ -16,47 +20,36 @@ import java.io.ByteArrayOutputStream;
  */
 public class KryoSerializeFactory implements SerializeFactory {
 
-    private static final ThreadLocal<Kryo> kryos = new ThreadLocal<Kryo>() {
-        @Override
-        protected Kryo initialValue() {
-            Kryo kryo = new Kryo();
-            return kryo;
-        }
-    };
+    private static final Logger LOGGER = LoggerFactory.getLogger(JdkSerializeFactory.class);
+
+    private static final ThreadLocal<Kryo> kryos = ThreadLocal.withInitial(() -> {
+        Kryo kryo = new Kryo();
+        return kryo;
+    });
 
     @Override
     public <T> byte[] serialize(T t) {
-        Output output = null;
-        try {
+        try (ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+             Output output = new Output(byteArrayOutputStream)) {
             Kryo kryo = kryos.get();
-            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-            output = new Output(byteArrayOutputStream);
             kryo.writeClassAndObject(output, t);
             return output.toBytes();
-        } catch (Exception e) {
+        } catch (IOException e) {
+            LOGGER.error("Failed to serialize object: " + t.toString(), e);
             throw new RuntimeException(e);
-        } finally {
-            if (output != null) {
-                output.close();
-            }
         }
     }
 
     @Override
     public <T> T deserialize(byte[] data, Class<T> clazz) {
-        Input input = null;
-        try {
+        try (ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(data);
+             Input input = new Input(byteArrayInputStream)) {
             Kryo kryo = kryos.get();
-            ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(data);
-            input = new Input(byteArrayInputStream);
-            return (T) kryo.readClassAndObject(input);
-        } catch (Exception e) {
+            return clazz.cast(kryo.readClassAndObject(input));
+        } catch (IOException e) {
+            LOGGER.error("Failed to deserialize data: " + data.toString(), e);
             throw new RuntimeException(e);
-        } finally {
-            if (input != null) {
-                input.close();
-            }
         }
     }
-
 }
+

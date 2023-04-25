@@ -3,6 +3,9 @@ package org.idea.irpc.framework.core.serialize.hessian;
 import com.caucho.hessian.io.Hessian2Input;
 import com.caucho.hessian.io.Hessian2Output;
 import org.idea.irpc.framework.core.serialize.SerializeFactory;
+import org.idea.irpc.framework.core.serialize.jdk.JdkSerializeFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -12,6 +15,7 @@ import java.io.ByteArrayOutputStream;
  * @Date created in 6:59 下午 2023/1/17
  */
 public class HessianSerializeFactory implements SerializeFactory {
+    private static final Logger LOGGER = LoggerFactory.getLogger(JdkSerializeFactory.class);
 
     @Override
     public <T> byte[] serialize(T t) {
@@ -25,6 +29,7 @@ public class HessianSerializeFactory implements SerializeFactory {
             output.close();
             data = os.toByteArray();
         } catch (Exception e) {
+            LOGGER.error("Failed to serialize object: " + t.toString(), e);
            throw new RuntimeException(e);
         }
         return data;
@@ -41,6 +46,7 @@ public class HessianSerializeFactory implements SerializeFactory {
             Hessian2Input input = new Hessian2Input(is);
             result = input.readObject();
         } catch (Exception e) {
+            LOGGER.error("Failed to deserialize data: " + data.toString(), e);
             throw new RuntimeException(e);
         }
         return (T) result;

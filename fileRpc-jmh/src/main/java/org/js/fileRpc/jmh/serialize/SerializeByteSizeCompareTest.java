@@ -1,7 +1,6 @@
 package org.js.fileRpc.jmh.serialize;
 
 import org.idea.irpc.framework.core.serialize.SerializeFactory;
-import org.idea.irpc.framework.core.serialize.fastjson.FastJsonSerializeFactory;
 import org.idea.irpc.framework.core.serialize.hessian.HessianSerializeFactory;
 import org.idea.irpc.framework.core.serialize.jdk.JdkSerializeFactory;
 import org.idea.irpc.framework.core.serialize.kryo.KryoSerializeFactory;
@@ -41,13 +40,6 @@ public class SerializeByteSizeCompareTest {
         System.out.println("hessian's size is "+result.length);
     }
 
-    public void fastJsonSerializeSizeTest() {
-        SerializeFactory serializeFactory = new FastJsonSerializeFactory();
-        User user = buildUserDefault();
-        byte[] result = serializeFactory.serialize(user);
-        User deserializeUser = serializeFactory.deserialize(result, User.class);
-        System.out.println("fastJson's size is "+result.length);
-    }
 
     public void kryoSerializeSizeTest() {
         SerializeFactory serializeFactory = new KryoSerializeFactory();
@@ -59,7 +51,6 @@ public class SerializeByteSizeCompareTest {
 
     public static void main(String[] args) {
         SerializeByteSizeCompareTest serializeByteSizeCompareTest = new SerializeByteSizeCompareTest();
-        serializeByteSizeCompareTest.fastJsonSerializeSizeTest();
         serializeByteSizeCompareTest.jdkSerializeSizeTest();
         serializeByteSizeCompareTest.kryoSerializeSizeTest();
         serializeByteSizeCompareTest.hessianSerializeSizeTest();
