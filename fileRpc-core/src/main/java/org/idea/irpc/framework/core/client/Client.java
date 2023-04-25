@@ -85,7 +85,7 @@ public class Client {
         });
         iRpcListenerLoader = new IRpcListenerLoader();
         iRpcListenerLoader.init();
-        this.clientConfig = PropertiesBootstrap.loadClientConfigFromLocal();
+        this.clientConfig = PropertiesBootstrap.buildClientConfiguration();
         CLIENT_CONFIG = this.clientConfig;
         //spi扩展的加载部分
         this.initClientConfig();

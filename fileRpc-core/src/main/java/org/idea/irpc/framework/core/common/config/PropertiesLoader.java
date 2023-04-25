@@ -1,6 +1,6 @@
 package org.idea.irpc.framework.core.common.config;
 
-import org.idea.irpc.framework.core.common.constance.Constance;
+import org.idea.irpc.framework.core.common.constance.PropertiesConstance;
 import org.idea.irpc.framework.core.common.utils.CommonUtils;
 
 import java.io.IOException;
@@ -22,12 +22,13 @@ public class PropertiesLoader {
     //使用volatile修饰属性，保证线程之间对变量的可见性。
     private static volatile Map<String, String> propertiesMap = new HashMap<>();
 
+    //初始化加载配置
     public static void loadConfiguration() throws IOException {
         //只有当配置不存在的时候才会重新从文件中加载
         if (Objects.isNull(properties)) {
             properties = new Properties();
             //加载默认的配置文件中的项目
-            InputStream in = PropertiesLoader.class.getClassLoader().getResourceAsStream(Constance.DEFAULT_PROPERTIES_FILE);
+            InputStream in = PropertiesLoader.class.getClassLoader().getResourceAsStream(PropertiesConstance.DEFAULT_PROPERTIES_FILE);
             properties.load(in);
         }
     }

@@ -106,7 +106,7 @@ public class Server {
     }
 
     public void initServerConfig() throws ClassNotFoundException, InstantiationException, IllegalAccessException, IOException {
-        ServerConfig serverConfig = PropertiesBootstrap.loadServerConfigFromLocal();
+        ServerConfig serverConfig = PropertiesBootstrap.bulidServerConfiguration();
         this.setServerConfig(serverConfig);
         SERVER_CONFIG = serverConfig;
         //初始化线程池和队列的配置
