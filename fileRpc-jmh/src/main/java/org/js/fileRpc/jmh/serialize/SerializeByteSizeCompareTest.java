@@ -4,6 +4,7 @@ import org.idea.irpc.framework.core.serialize.SerializeFactory;
 import org.idea.irpc.framework.core.serialize.hessian.HessianSerializeFactory;
 import org.idea.irpc.framework.core.serialize.jdk.JdkSerializeFactory;
 import org.idea.irpc.framework.core.serialize.kryo.KryoSerializeFactory;
+import org.idea.irpc.framework.core.serialize.protostuff.ProtostuffSerializeFactory;
 import org.js.fileRpc.interfaces.bean.FileMessage;
 
 import java.io.ByteArrayOutputStream;
@@ -15,6 +16,7 @@ import java.nio.file.Paths;
 
 /**
  * 不同序列化产生的码流大小测试
+ *
  * @Author jiangshang
  */
 public class SerializeByteSizeCompareTest {
@@ -36,25 +38,45 @@ public class SerializeByteSizeCompareTest {
     }
 
     public void jdkSerializeTest() throws IOException {
+
+        long start = System.currentTimeMillis();
         SerializeFactory serializeFactory = new JdkSerializeFactory();
         FileMessage file = buildFileData();
         byte[] result = serializeFactory.serialize(file);
-        System.out.println("'JDK' 序列化生成的码流大小是：" + result.length);
+        long end = System.currentTimeMillis();
+        System.out.println("'JDK' 序列化生成的码流大小是："
+                + result.length + "  'JDK' 序列化生成码流所耗时间：" + (end - start) + "ms");
     }
 
     public void hessianSerializeTest() throws IOException {
+        long start = System.currentTimeMillis();
         SerializeFactory serializeFactory = new HessianSerializeFactory();
         FileMessage file = buildFileData();
         byte[] result = serializeFactory.serialize(file);
-        System.out.println("HESSIAN'序列化生成的码流大小是：" + result.length);
+        long end = System.currentTimeMillis();
+        System.out.println("'HESSIAN'序列化生成的码流大小是："
+                + result.length + "  'HESSIAN' 序列化生成码流所耗时间：" + (end - start) + " ms ");
     }
 
 
+    public void protostuffSerializeTest() throws IOException {
+        long start = System.currentTimeMillis();
+        SerializeFactory serializeFactory = new ProtostuffSerializeFactory();
+        FileMessage file = buildFileData();
+        byte[] result = serializeFactory.serialize(file);
+        long end = System.currentTimeMillis();
+        System.out.println("'PROTOSTUFF' 序列化生成的码流大小是：" +
+                result.length + "   'PROTOSTUFF' 序列化生成码流所耗时间：" + (end - start) + " ms ");
+    }
+
     public void kryoSerializeTest() throws IOException {
+        long start = System.currentTimeMillis();
         SerializeFactory serializeFactory = new KryoSerializeFactory();
         FileMessage file = buildFileData();
         byte[] result = serializeFactory.serialize(file);
-        System.out.println("KRYO' 序列化生成的码流大小是：" + result.length);
+        long end = System.currentTimeMillis();
+        System.out.println("'KRYO' 序列化生成的码流大小是：" +
+                result.length + "   'KRYO' 序列化生成码流所耗时间：" + (end - start) + " ms ");
     }
 
     public static void main(String[] args) throws IOException {
@@ -62,5 +84,6 @@ public class SerializeByteSizeCompareTest {
         serializeByteSizeCompareTest.jdkSerializeTest();
         serializeByteSizeCompareTest.hessianSerializeTest();
         serializeByteSizeCompareTest.kryoSerializeTest();
+        serializeByteSizeCompareTest.protostuffSerializeTest();
     }
 }
