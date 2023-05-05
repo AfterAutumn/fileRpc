@@ -124,7 +124,7 @@ INFO http-nio-8081-exec-4 org.springframework.web.servlet.DispatcherServlet - In
 INFO http-nio-8081-exec-4 org.springframework.web.servlet.DispatcherServlet - Completed initialization in 30 ms
 ERROR main-EventThread org.apache.zookeeper.ClientCnxn - Error while calling watcher 
 java.lang.NullPointerException
-	at org.idea.irpc.framework.core.registy.URL.buildURLFromUrlStr(URL.java:94)
+	at org.idea.irpc.framework.core.registy.RegistryConfig.buildURLFromUrlStr(URL.java:94)
 	at org.idea.irpc.framework.core.registy.zookeeper.ZookeeperRegister$1.process(ZookeeperRegister.java:144)
 	at org.apache.curator.framework.imps.NamespaceWatcher.process(NamespaceWatcher.java:62)
 	at org.apache.zookeeper.ClientCnxn$EventThread.processEvent(ClientCnxn.java:533)
@@ -463,7 +463,7 @@ INFO SpringApplicationShutdownHook com.alibaba.nacos.client.config.impl.ClientWo
 INFO SpringApplicationShutdownHook com.alibaba.nacos.client.config.impl.ClientWorker - com.alibaba.nacos.client.config.impl.ClientWorker do shutdown stop
 ERROR main-EventThread org.apache.zookeeper.ClientCnxn - Error while calling watcher 
 java.lang.NullPointerException
-	at org.idea.irpc.framework.core.registy.URL.buildURLFromUrlStr(URL.java:94)
+	at org.idea.irpc.framework.core.registy.RegistryConfig.buildURLFromUrlStr(URL.java:94)
 	at org.idea.irpc.framework.core.registy.zookeeper.ZookeeperRegister$1.process(ZookeeperRegister.java:144)
 	at org.apache.curator.framework.imps.NamespaceWatcher.process(NamespaceWatcher.java:62)
 	at org.apache.zookeeper.ClientCnxn$EventThread.processEvent(ClientCnxn.java:533)

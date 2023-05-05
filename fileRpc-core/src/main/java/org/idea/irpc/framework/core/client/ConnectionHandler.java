@@ -7,7 +7,7 @@ import io.netty.channel.ChannelFuture;
 import org.idea.irpc.framework.core.common.ChannelFutureWrapper;
 import org.idea.irpc.framework.core.protocol.RpcInvocation;
 import org.idea.irpc.framework.core.common.utils.CommonUtils;
-import org.idea.irpc.framework.core.registy.URL;
+import org.idea.irpc.framework.core.registy.RegistryConfig;
 import org.idea.irpc.framework.core.registy.zookeeper.ProviderNodeInfo;
 import org.idea.irpc.framework.core.routeModule.Selector;
 
@@ -55,7 +55,7 @@ public class ConnectionHandler {
         //到底这个channelFuture里面是什么
         ChannelFuture channelFuture = bootstrap.connect(ip, port).sync();
         String providerURLInfo = URL_MAP.get(providerServiceName).get(providerIp);
-        ProviderNodeInfo providerNodeInfo = URL.buildURLFromUrlStr(providerURLInfo);
+        ProviderNodeInfo providerNodeInfo = RegistryConfig.buildURLFromUrlStr(providerURLInfo);
         //todo 缺少一个将url进行转换的组件
         ChannelFutureWrapper channelFutureWrapper = new ChannelFutureWrapper();
         channelFutureWrapper.setChannelFuture(channelFuture);

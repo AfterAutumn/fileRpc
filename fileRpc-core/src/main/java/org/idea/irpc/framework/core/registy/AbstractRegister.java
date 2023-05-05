@@ -1,13 +1,10 @@
 package org.idea.irpc.framework.core.registy;
 
-import org.idea.irpc.framework.core.registy.RegistryService;
-import org.idea.irpc.framework.core.registy.URL;
-
 import java.util.List;
 import java.util.Map;
 
 import static org.idea.irpc.framework.core.common.cache.CommonClientCache.SUBSCRIBE_SERVICE_LIST;
-import static org.idea.irpc.framework.core.common.cache.CommonServerCache.PROVIDER_URL_SET;
+import static org.idea.irpc.framework.core.common.cache.CommonServerCache.PROVIDER_REGISTRY_CONFIG_SET;
 
 /**
  * @Author jiangshang
@@ -17,37 +14,37 @@ public abstract class AbstractRegister implements RegistryService {
 
 
     @Override
-    public void register(URL url) {
-        PROVIDER_URL_SET.add(url);
+    public void register(RegistryConfig registryConfig) {
+        PROVIDER_REGISTRY_CONFIG_SET.add(registryConfig);
     }
 
     @Override
-    public void unRegister(URL url) {
-        PROVIDER_URL_SET.remove(url);
+    public void unRegister(RegistryConfig registryConfig) {
+        PROVIDER_REGISTRY_CONFIG_SET.remove(registryConfig);
     }
 
     @Override
-    public void subscribe(URL url) {
-        SUBSCRIBE_SERVICE_LIST.add(url);
+    public void subscribe(RegistryConfig registryConfig) {
+        SUBSCRIBE_SERVICE_LIST.add(registryConfig);
     }
 
     @Override
-    public void doUnSubscribe(URL url) {
-        SUBSCRIBE_SERVICE_LIST.remove(url.getServiceName());
+    public void doUnSubscribe(RegistryConfig registryConfig) {
+        SUBSCRIBE_SERVICE_LIST.remove(registryConfig.getServiceName());
     }
 
     /**
      *订阅服务后可自定义做些扩展
-     * @param url
+     * @param registryConfig
      */
-    public abstract void doAfterSubscribe(URL url);
+    public abstract void doAfterSubscribe(RegistryConfig registryConfig);
 
     /**
      * 订阅服务前可自定义做些扩展
      *
-     * @param url
+     * @param registryConfig
      */
-    public abstract void doBeforeSubscribe(URL url);
+    public abstract void doBeforeSubscribe(RegistryConfig registryConfig);
 
     /**
      * 留给子类扩展

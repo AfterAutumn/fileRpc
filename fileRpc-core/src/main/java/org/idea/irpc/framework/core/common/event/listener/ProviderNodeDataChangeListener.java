@@ -2,7 +2,7 @@ package org.idea.irpc.framework.core.common.event.listener;
 
 import org.idea.irpc.framework.core.common.ChannelFutureWrapper;
 import org.idea.irpc.framework.core.common.event.IRpcNodeChangeEvent;
-import org.idea.irpc.framework.core.registy.URL;
+import org.idea.irpc.framework.core.registy.RegistryConfig;
 import org.idea.irpc.framework.core.registy.zookeeper.ProviderNodeInfo;
 
 import java.util.List;
@@ -26,10 +26,10 @@ public class ProviderNodeDataChangeListener implements IRpcListener<IRpcNodeChan
                 channelFutureWrapper.setGroup(providerNodeInfo.getGroup());
                 //修改权重
                 channelFutureWrapper.setWeight(providerNodeInfo.getWeight());
-                URL url = new URL();
-                url.setServiceName(providerNodeInfo.getServiceName());
+                RegistryConfig registryConfig = new RegistryConfig();
+                registryConfig.setServiceName(providerNodeInfo.getServiceName());
                 //更新权重
-                IROUTER.updateWeight(url);
+                IROUTER.updateWeight(registryConfig);
                 break;
             }
         }

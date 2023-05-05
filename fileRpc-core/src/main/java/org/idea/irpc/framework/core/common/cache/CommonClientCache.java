@@ -5,7 +5,7 @@ import org.idea.irpc.framework.core.common.ChannelFutureWrapper;
 import org.idea.irpc.framework.core.protocol.RpcInvocation;
 import org.idea.irpc.framework.core.common.config.ClientConfig;
 import org.idea.irpc.framework.core.filter.client.ClientFilterChain;
-import org.idea.irpc.framework.core.registy.URL;
+import org.idea.irpc.framework.core.registy.RegistryConfig;
 import org.idea.irpc.framework.core.registy.AbstractRegister;
 import org.idea.irpc.framework.core.routeModule.IRouter;
 import org.idea.irpc.framework.core.serialize.SerializeFactory;
@@ -29,7 +29,7 @@ public class CommonClientCache {
     //结果返回队列
     public static Map<String, Object> RESPONSE_QUEUE = new ConcurrentHashMap<>();
     //provider名称 --> 该服务有哪些集群URL
-    public static List<URL> SUBSCRIBE_SERVICE_LIST = new ArrayList<>();
+    public static List<RegistryConfig> SUBSCRIBE_SERVICE_LIST = new ArrayList<>();
     //com.sise.test.service -> <<ip:host,urlString>,<ip:host,urlString>,<ip:host,urlString>>
     public static Map<String, Map<String,String>> URL_MAP = new ConcurrentHashMap<>();
     public static Set<String> SERVER_ADDRESS = new HashSet<>();

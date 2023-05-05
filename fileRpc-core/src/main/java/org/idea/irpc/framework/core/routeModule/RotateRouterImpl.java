@@ -1,7 +1,7 @@
 package org.idea.irpc.framework.core.routeModule;
 
 import org.idea.irpc.framework.core.common.ChannelFutureWrapper;
-import org.idea.irpc.framework.core.registy.URL;
+import org.idea.irpc.framework.core.registy.RegistryConfig;
 
 import java.util.List;
 
@@ -31,7 +31,7 @@ public class RotateRouterImpl implements IRouter{
     }
 
     @Override
-    public void updateWeight(URL url) {
+    public void updateWeight(RegistryConfig registryConfig) {
 
     }
 }

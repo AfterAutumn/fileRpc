@@ -5,7 +5,7 @@ import org.idea.irpc.framework.core.client.ConnectionHandler;
 import org.idea.irpc.framework.core.common.ChannelFutureWrapper;
 import org.idea.irpc.framework.core.common.event.IRpcUpdateEvent;
 import org.idea.irpc.framework.core.common.event.data.URLChangeWrapper;
-import org.idea.irpc.framework.core.registy.URL;
+import org.idea.irpc.framework.core.registy.RegistryConfig;
 import org.idea.irpc.framework.core.registy.zookeeper.ProviderNodeInfo;
 import org.idea.irpc.framework.core.routeModule.Selector;
 import org.slf4j.Logger;
@@ -52,7 +52,7 @@ public class ServiceUpdateListener implements IRpcListener<IRpcUpdateEvent> {
                 channelFutureWrapper.setPort(port);
                 channelFutureWrapper.setHost(host);
                 String urlStr = urlChangeWrapper.getNodeDataUrl().get(newProviderUrl);
-                ProviderNodeInfo providerNodeInfo = URL.buildURLFromUrlStr(urlStr);
+                ProviderNodeInfo providerNodeInfo = RegistryConfig.buildURLFromUrlStr(urlStr);
                 channelFutureWrapper.setWeight(providerNodeInfo.getWeight());
                 channelFutureWrapper.setGroup(providerNodeInfo.getGroup());
                 ChannelFuture channelFuture = null;

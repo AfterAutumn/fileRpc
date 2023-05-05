@@ -1,7 +1,7 @@
 package org.idea.irpc.framework.core.routeModule;
 
 import org.idea.irpc.framework.core.common.ChannelFutureWrapper;
-import org.idea.irpc.framework.core.registy.URL;
+import org.idea.irpc.framework.core.registy.RegistryConfig;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,10 +29,10 @@ public class RandomRouterImpl implements IRouter {
             arr[i] = channelFutureWrappers.get(result[i]);
         }
         SERVICE_ROUTER_MAP.put(selector.getProviderServiceName(), arr);
-        URL url = new URL();
-        url.setServiceName(selector.getProviderServiceName());
+        RegistryConfig registryConfig = new RegistryConfig();
+        registryConfig.setServiceName(selector.getProviderServiceName());
         //更新权重
-        IROUTER.updateWeight(url);
+        IROUTER.updateWeight(registryConfig);
     }
 
     @Override
@@ -41,16 +41,16 @@ public class RandomRouterImpl implements IRouter {
     }
 
     @Override
-    public void updateWeight(URL url) {
+    public void updateWeight(RegistryConfig registryConfig) {
         //服务节点的权重
-        List<ChannelFutureWrapper> channelFutureWrappers = CONNECT_MAP.get(url.getServiceName());
+        List<ChannelFutureWrapper> channelFutureWrappers = CONNECT_MAP.get(registryConfig.getServiceName());
         Integer[] weightArr = createWeightArr(channelFutureWrappers);
         Integer[] finalArr = createRandomArr(weightArr);
         ChannelFutureWrapper[] finalChannelFutureWrappers = new ChannelFutureWrapper[finalArr.length];
         for (int j = 0; j < finalArr.length; j++) {
             finalChannelFutureWrappers[j] = channelFutureWrappers.get(finalArr[j]);
         }
-        SERVICE_ROUTER_MAP.put(url.getServiceName(),finalChannelFutureWrappers);
+        SERVICE_ROUTER_MAP.put(registryConfig.getServiceName(),finalChannelFutureWrappers);
     }
 
     private static Integer[] createWeightArr(List<ChannelFutureWrapper> channelFutureWrappers) {

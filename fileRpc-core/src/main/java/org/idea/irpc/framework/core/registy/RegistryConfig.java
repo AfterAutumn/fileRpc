@@ -7,10 +7,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * 注册中心总体配置
+ * 注册中心配置类（配置属性
  * @Author jiangshang
  */
-public class URL {
+public class RegistryConfig {
 
     /**
      * 服务应用名称
@@ -62,25 +62,25 @@ public class URL {
     /**
      * 将URL转换为写入zk的provider节点下的一段字符串
      *
-     * @param url
+     * @param registryConfig
      * @return
      */
-    public static String buildProviderUrlStr(URL url) {
-        String host = url.getParameters().get("host");
-        String port = url.getParameters().get("port");
-        String group = url.getParameters().get("group");
-        return new String((url.getApplicationName() + ";" + url.getServiceName() + ";" + host + ":" + port + ";" + System.currentTimeMillis() + ";100;" + group).getBytes(), StandardCharsets.UTF_8);
+    public static String buildProviderUrlStr(RegistryConfig registryConfig) {
+        String host = registryConfig.getParameters().get("host");
+        String port = registryConfig.getParameters().get("port");
+        String group = registryConfig.getParameters().get("group");
+        return new String((registryConfig.getApplicationName() + ";" + registryConfig.getServiceName() + ";" + host + ":" + port + ";" + System.currentTimeMillis() + ";100;" + group).getBytes(), StandardCharsets.UTF_8);
     }
 
     /**
      * 将URL转换为写入zk的consumer节点下的一段字符串
      *
-     * @param url
+     * @param registryConfig
      * @return
      */
-    public static String buildConsumerUrlStr(URL url) {
-        String host = url.getParameters().get("host");
-        return new String((url.getApplicationName() + ";" + url.getServiceName() + ";" + host + ";" + System.currentTimeMillis()).getBytes(), StandardCharsets.UTF_8);
+    public static String buildConsumerUrlStr(RegistryConfig registryConfig) {
+        String host = registryConfig.getParameters().get("host");
+        return new String((registryConfig.getApplicationName() + ";" + registryConfig.getServiceName() + ";" + host + ";" + System.currentTimeMillis()).getBytes(), StandardCharsets.UTF_8);
     }
 
 

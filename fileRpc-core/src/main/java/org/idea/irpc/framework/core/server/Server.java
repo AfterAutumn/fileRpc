@@ -23,7 +23,7 @@ import org.idea.irpc.framework.core.filter.IServerFilter;
 import org.idea.irpc.framework.core.filter.server.ServerAfterFilterChain;
 import org.idea.irpc.framework.core.filter.server.ServerBeforeFilterChain;
 import org.idea.irpc.framework.core.registy.RegistryService;
-import org.idea.irpc.framework.core.registy.URL;
+import org.idea.irpc.framework.core.registy.RegistryConfig;
 import org.idea.irpc.framework.core.registy.AbstractRegister;
 import org.idea.irpc.framework.core.serialize.SerializeFactory;
 import org.slf4j.Logger;
@@ -169,16 +169,16 @@ public class Server {
         //默认选择该对象的第一个实现接口
         Class interfaceClass = classes[0];
         PROVIDER_CLASS_MAP.put(interfaceClass.getName(), serviceBean);
-        URL url = new URL();
-        url.setServiceName(interfaceClass.getName());
-        url.setApplicationName(serverConfig.getApplicationName());
-        url.addParameter("host", CommonUtils.getIpAddress());
-        url.addParameter("port", String.valueOf(serverConfig.getServerPort()));
-        url.addParameter("group", String.valueOf(serviceWrapper.getGroup()));
-        url.addParameter("limit", String.valueOf(serviceWrapper.getLimit()));
+        RegistryConfig registryConfig = new RegistryConfig();
+        registryConfig.setServiceName(interfaceClass.getName());
+        registryConfig.setApplicationName(serverConfig.getApplicationName());
+        registryConfig.addParameter("host", CommonUtils.getIpAddress());
+        registryConfig.addParameter("port", String.valueOf(serverConfig.getServerPort()));
+        registryConfig.addParameter("group", String.valueOf(serviceWrapper.getGroup()));
+        registryConfig.addParameter("limit", String.valueOf(serviceWrapper.getLimit()));
         //设置服务端的限流器
         SERVER_SERVICE_SEMAPHORE_MAP.put(interfaceClass.getName(), new ServerServiceSemaphoreWrapper(serviceWrapper.getLimit()));
-        PROVIDER_URL_SET.add(url);
+        PROVIDER_REGISTRY_CONFIG_SET.add(registryConfig);
         if (CommonUtils.isNotEmpty(serviceWrapper.getServiceToken())) {
             PROVIDER_SERVICE_WRAPPER_MAP.put(interfaceClass.getName(), serviceWrapper);
         }
@@ -196,7 +196,7 @@ public class Server {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                for (URL url : PROVIDER_URL_SET) {
+                for (RegistryConfig url : PROVIDER_REGISTRY_CONFIG_SET) {
                     REGISTRY_SERVICE.register(url);
                     LOGGER.info("[Server] export service {}", url.getServiceName());
                 }

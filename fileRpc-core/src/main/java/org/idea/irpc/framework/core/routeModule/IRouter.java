@@ -1,7 +1,7 @@
 package org.idea.irpc.framework.core.routeModule;
 
 import org.idea.irpc.framework.core.common.ChannelFutureWrapper;
-import org.idea.irpc.framework.core.registy.URL;
+import org.idea.irpc.framework.core.registy.RegistryConfig;
 
 /**
  * @Author jiangshang
@@ -27,7 +27,7 @@ public interface IRouter {
     /**
      * 更新权重信息
      *
-     * @param url
+     * @param registryConfig
      */
-    void updateWeight(URL url);
+    void updateWeight(RegistryConfig registryConfig);
 }

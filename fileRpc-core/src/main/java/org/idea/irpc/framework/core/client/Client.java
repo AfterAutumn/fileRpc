@@ -23,8 +23,8 @@ import org.idea.irpc.framework.core.common.utils.CommonUtils;
 import org.idea.irpc.framework.core.filter.IClientFilter;
 import org.idea.irpc.framework.core.filter.client.ClientFilterChain;
 import org.idea.irpc.framework.core.proxy.ProxyFactory;
+import org.idea.irpc.framework.core.registy.RegistryConfig;
 import org.idea.irpc.framework.core.registy.RegistryService;
-import org.idea.irpc.framework.core.registy.URL;
 import org.idea.irpc.framework.core.registy.AbstractRegister;
 import org.idea.irpc.framework.core.routeModule.IRouter;
 import org.idea.irpc.framework.core.serialize.SerializeFactory;
@@ -113,32 +113,32 @@ public class Client {
                 throw new RuntimeException("registryServiceType unKnow,error is ", e);
             }
         }
-        URL url = new URL();
-        url.setApplicationName(clientConfig.getApplicationName());
-        url.setServiceName(serviceBean.getName());
-        url.addParameter("host", CommonUtils.getIpAddress());
+        RegistryConfig registryConfig = new RegistryConfig();
+        registryConfig.setApplicationName(clientConfig.getApplicationName());
+        registryConfig.setServiceName(serviceBean.getName());
+        registryConfig.addParameter("host", CommonUtils.getIpAddress());
         Map<String, String> result = ABSTRACT_REGISTER.getServiceWeightMap(serviceBean.getName());
         URL_MAP.put(serviceBean.getName(), result);
-        ABSTRACT_REGISTER.subscribe(url);
+        ABSTRACT_REGISTER.subscribe(registryConfig);
     }
 
     /**
      * 开始和各个provider建立连接，同时监听各个providerNode节点的变化（child变化和nodeData的变化）
      */
     public void doConnectServer() {
-        for (URL providerURL : SUBSCRIBE_SERVICE_LIST) {
-            List<String> providerIps = ABSTRACT_REGISTER.getProviderIps(providerURL.getServiceName());
+        for (RegistryConfig providerRegistryConfig : SUBSCRIBE_SERVICE_LIST) {
+            List<String> providerIps = ABSTRACT_REGISTER.getProviderIps(providerRegistryConfig.getServiceName());
             for (String providerIp : providerIps) {
                 try {
-                    ConnectionHandler.connect(providerURL.getServiceName(), providerIp);
+                    ConnectionHandler.connect(providerRegistryConfig.getServiceName(), providerIp);
                 } catch (InterruptedException e) {
                     logger.error("[doConnectServer] connect fail ", e);
                 }
             }
-            URL url = new URL();
-            url.addParameter("servicePath", providerURL.getServiceName() + "/provider");
-            url.addParameter("providerIps", JSON.toJSONString(providerIps));
-            ABSTRACT_REGISTER.doAfterSubscribe(url);
+            RegistryConfig registryConfig = new RegistryConfig();
+            registryConfig.addParameter("servicePath", providerRegistryConfig.getServiceName() + "/provider");
+            registryConfig.addParameter("providerIps", JSON.toJSONString(providerIps));
+            ABSTRACT_REGISTER.doAfterSubscribe(registryConfig);
         }
     }
 

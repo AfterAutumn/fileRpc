@@ -10,8 +10,8 @@ import org.idea.irpc.framework.core.common.event.IRpcUpdateEvent;
 import org.idea.irpc.framework.core.common.event.data.URLChangeWrapper;
 import org.idea.irpc.framework.core.common.utils.CommonUtils;
 import org.idea.irpc.framework.core.registy.AbstractRegister;
+import org.idea.irpc.framework.core.registy.RegistryConfig;
 import org.idea.irpc.framework.core.registy.RegistryService;
-import org.idea.irpc.framework.core.registy.URL;
 
 import java.util.HashMap;
 import java.util.List;
@@ -40,12 +40,12 @@ public class ZookeeperRegister extends AbstractRegister implements RegistryServi
     }
 
     //获取服务提供者的路径
-    private String getProviderPath(URL url) {
-        return ROOT + "/" + url.getServiceName() + "/provider/" + url.getParameters().get("host") + ":" + url.getParameters().get("port");
+    private String getProviderPath(RegistryConfig registryConfig) {
+        return ROOT + "/" + registryConfig.getServiceName() + "/provider/" + registryConfig.getParameters().get("host") + ":" + registryConfig.getParameters().get("port");
     }
 
-    private String getConsumerPath(URL url) {
-        return ROOT + "/" + url.getServiceName() + "/consumer/" + url.getApplicationName() + ":" + url.getParameters().get("host") + ":";
+    private String getConsumerPath(RegistryConfig registryConfig) {
+        return ROOT + "/" + registryConfig.getServiceName() + "/consumer/" + registryConfig.getApplicationName() + ":" + registryConfig.getParameters().get("host") + ":";
     }
 
     public ZookeeperRegister() {
@@ -76,52 +76,52 @@ public class ZookeeperRegister extends AbstractRegister implements RegistryServi
     }
 
     @Override
-    public void register(URL url) {
+    public void register(RegistryConfig registryConfig) {
         if (!this.zkClient.existNode(ROOT)) {
             zkClient.createPersistentData(ROOT, "");
         }
-        String urlStr = URL.buildProviderUrlStr(url);
-        if (!zkClient.existNode(getProviderPath(url))) {
-            zkClient.createTemporaryData(getProviderPath(url), urlStr);
+        String urlStr = RegistryConfig.buildProviderUrlStr(registryConfig);
+        if (!zkClient.existNode(getProviderPath(registryConfig))) {
+            zkClient.createTemporaryData(getProviderPath(registryConfig), urlStr);
         } else {
-            zkClient.deleteNode(getProviderPath(url));
-            zkClient.createTemporaryData(getProviderPath(url), urlStr);
+            zkClient.deleteNode(getProviderPath(registryConfig));
+            zkClient.createTemporaryData(getProviderPath(registryConfig), urlStr);
         }
-        super.register(url);
+        super.register(registryConfig);
     }
 
     @Override
-    public void unRegister(URL url) {
+    public void unRegister(RegistryConfig registryConfig) {
         if (!IS_STARTED) {
             return;
         }
-        zkClient.deleteNode(getProviderPath(url));
-        super.unRegister(url);
+        zkClient.deleteNode(getProviderPath(registryConfig));
+        super.unRegister(registryConfig);
     }
 
     @Override
-    public void subscribe(URL url) {
+    public void subscribe(RegistryConfig registryConfig) {
         if (!this.zkClient.existNode(ROOT)) {
             zkClient.createPersistentData(ROOT, "");
         }
-        String urlStr = URL.buildConsumerUrlStr(url);
-        if (!zkClient.existNode(getConsumerPath(url))) {
-            zkClient.createTemporarySeqData(getConsumerPath(url), urlStr);
+        String urlStr = RegistryConfig.buildConsumerUrlStr(registryConfig);
+        if (!zkClient.existNode(getConsumerPath(registryConfig))) {
+            zkClient.createTemporarySeqData(getConsumerPath(registryConfig), urlStr);
         } else {
-            zkClient.deleteNode(getConsumerPath(url));
-            zkClient.createTemporarySeqData(getConsumerPath(url), urlStr);
+            zkClient.deleteNode(getConsumerPath(registryConfig));
+            zkClient.createTemporarySeqData(getConsumerPath(registryConfig), urlStr);
         }
-        super.subscribe(url);
+        super.subscribe(registryConfig);
     }
 
     @Override
-    public void doAfterSubscribe(URL url) {
+    public void doAfterSubscribe(RegistryConfig registryConfig) {
         //监听是否有新的服务注册
-        String servicePath = url.getParameters().get("servicePath");
+        String servicePath = registryConfig.getParameters().get("servicePath");
         String newServerNodePath = ROOT + "/" + servicePath;
         //订阅节点地址为：/irpc/com.sise.test.UserService/provider
         this.watchChildNodeData(newServerNodePath);
-        String providerIpStrJson = url.getParameters().get("providerIps");
+        String providerIpStrJson = registryConfig.getParameters().get("providerIps");
         List<String> providerIpList = JSON.parseObject(providerIpStrJson, List.class);
         for (String providerIp : providerIpList) {
             //启动环节会触发订阅订阅节点详情地址为：/irpc/com.sise.test.UserService/provider/192.11.11.101:9090
@@ -141,7 +141,7 @@ public class ZookeeperRegister extends AbstractRegister implements RegistryServi
                 String path = watchedEvent.getPath();
                 System.out.println("[watchNodeDataChange] 监听到zk节点下的" + path + "节点数据发生变更");
                 String nodeData = zkClient.getNodeData(path);
-                ProviderNodeInfo providerNodeInfo = URL.buildURLFromUrlStr(nodeData);
+                ProviderNodeInfo providerNodeInfo = RegistryConfig.buildURLFromUrlStr(nodeData);
                 IRpcEvent iRpcEvent = new IRpcNodeChangeEvent(providerNodeInfo);
                 IRpcListenerLoader.sendEvent(iRpcEvent);
                 watchNodeDataChange(newServerNodePath);
@@ -181,14 +181,14 @@ public class ZookeeperRegister extends AbstractRegister implements RegistryServi
     }
 
     @Override
-    public void doBeforeSubscribe(URL url) {
+    public void doBeforeSubscribe(RegistryConfig registryConfig) {
 
     }
 
     @Override
-    public void doUnSubscribe(URL url) {
-        this.zkClient.deleteNode(getConsumerPath(url));
-        super.doUnSubscribe(url);
+    public void doUnSubscribe(RegistryConfig registryConfig) {
+        this.zkClient.deleteNode(getConsumerPath(registryConfig));
+        super.doUnSubscribe(registryConfig);
     }
 
     public static void main(String[] args) throws InterruptedException {

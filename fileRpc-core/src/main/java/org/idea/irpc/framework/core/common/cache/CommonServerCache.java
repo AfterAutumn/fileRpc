@@ -6,7 +6,7 @@ import org.idea.irpc.framework.core.common.config.ServerConfig;
 import org.idea.irpc.framework.core.dispatcher.ServerChannelDispatcher;
 import org.idea.irpc.framework.core.filter.server.ServerAfterFilterChain;
 import org.idea.irpc.framework.core.filter.server.ServerBeforeFilterChain;
-import org.idea.irpc.framework.core.registy.URL;
+import org.idea.irpc.framework.core.registy.RegistryConfig;
 import org.idea.irpc.framework.core.registy.AbstractRegister;
 import org.idea.irpc.framework.core.serialize.SerializeFactory;
 import org.idea.irpc.framework.core.server.ServiceWrapper;
@@ -22,7 +22,7 @@ import java.util.concurrent.*;
 public class CommonServerCache {
 
     public static final Map<String,Object> PROVIDER_CLASS_MAP = new ConcurrentHashMap<>();
-    public static final Set<URL> PROVIDER_URL_SET = new ConcurrentSet<>();
+    public static final Set<RegistryConfig> PROVIDER_REGISTRY_CONFIG_SET = new ConcurrentSet<>();
     public static AbstractRegister REGISTRY_SERVICE;
     public static SerializeFactory SERVER_SERIALIZE_FACTORY;
     public static ServerConfig SERVER_CONFIG;
