@@ -1,4 +1,4 @@
-package org.idea.irpc.framework.core.router;
+package org.idea.irpc.framework.core.routeModule;
 
 import org.idea.irpc.framework.core.common.ChannelFutureWrapper;
 import org.idea.irpc.framework.core.registy.URL;
@@ -10,10 +10,9 @@ import java.util.Random;
 import static org.idea.irpc.framework.core.common.cache.CommonClientCache.*;
 
 /**
- * 随机筛选
+ * 负载均衡-随机
  *
  * @Author jiangshang
- * @Date created in 8:26 下午 2023/1/5
  */
 public class RandomRouterImpl implements IRouter {
 

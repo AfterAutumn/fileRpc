@@ -1,4 +1,4 @@
-package org.idea.irpc.framework.core.router;
+package org.idea.irpc.framework.core.routeModule;
 
 import org.idea.irpc.framework.core.common.ChannelFutureWrapper;
 import org.idea.irpc.framework.core.registy.URL;
@@ -11,7 +11,6 @@ import static org.idea.irpc.framework.core.common.cache.CommonClientCache.*;
  * 轮训策略
  *
  * @Author jiangshang
- * @Date created in 8:30 下午 2023/1/5
  */
 public class RotateRouterImpl implements IRouter{
 

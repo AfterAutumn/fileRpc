@@ -1,4 +1,4 @@
-package org.idea.irpc.framework.core.router;
+package org.idea.irpc.framework.core.routeModule;
 
 /**
  * @Author jiangshang

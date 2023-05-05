@@ -26,7 +26,7 @@ import org.idea.irpc.framework.core.proxy.ProxyFactory;
 import org.idea.irpc.framework.core.registy.RegistryService;
 import org.idea.irpc.framework.core.registy.URL;
 import org.idea.irpc.framework.core.registy.AbstractRegister;
-import org.idea.irpc.framework.core.router.IRouter;
+import org.idea.irpc.framework.core.routeModule.IRouter;
 import org.idea.irpc.framework.core.serialize.SerializeFactory;
 import org.js.fileRpc.interfaces.DataService;
 import org.slf4j.Logger;

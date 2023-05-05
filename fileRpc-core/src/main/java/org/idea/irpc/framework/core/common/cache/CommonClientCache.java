@@ -7,7 +7,7 @@ import org.idea.irpc.framework.core.common.config.ClientConfig;
 import org.idea.irpc.framework.core.filter.client.ClientFilterChain;
 import org.idea.irpc.framework.core.registy.URL;
 import org.idea.irpc.framework.core.registy.AbstractRegister;
-import org.idea.irpc.framework.core.router.IRouter;
+import org.idea.irpc.framework.core.routeModule.IRouter;
 import org.idea.irpc.framework.core.serialize.SerializeFactory;
 import org.idea.irpc.framework.core.spi.ExtensionLoader;
 
