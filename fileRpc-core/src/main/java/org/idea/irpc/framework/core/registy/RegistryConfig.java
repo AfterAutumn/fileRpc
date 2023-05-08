@@ -23,15 +23,14 @@ public class RegistryConfig {
     private String serviceName;
     /**
      * 这里面可以自定义不限进行扩展
-     * 分组
      * 权重
      * 服务提供者的地址
      * 服务提供者的端口
      */
-    private Map<String, String> parameters = new HashMap<>();
+    private Map<String, String> params = new HashMap<>();
 
     public void addParameter(String key, String value) {
-        this.parameters.putIfAbsent(key, value);
+        this.params.putIfAbsent(key, value);
     }
 
     public String getApplicationName() {
@@ -51,11 +50,11 @@ public class RegistryConfig {
     }
 
     public Map<String, String> getParameters() {
-        return parameters;
+        return params;
     }
 
     public void setParameters(Map<String, String> parameters) {
-        this.parameters = parameters;
+        this.params = parameters;
     }
 
 

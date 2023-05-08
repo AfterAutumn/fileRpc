@@ -1,9 +1,11 @@
 package org.idea.irpc.framework.core.registy.Nacos;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.nacos.api.naming.NamingFactory;
 import com.alibaba.nacos.api.naming.NamingService;
 import com.alibaba.nacos.api.naming.pojo.Instance;
 
+import org.idea.irpc.framework.core.common.constance.RegistryConstance;
 import org.idea.irpc.framework.core.registy.RegistryConfig;
 import org.idea.irpc.framework.core.registy.RegistryService;
 import org.slf4j.Logger;
@@ -12,75 +14,66 @@ import org.slf4j.LoggerFactory;
 import java.util.HashMap;
 import java.util.Map;
 
-public class NacosRegistry implements RegistryService {
-    private static final Logger logger = LoggerFactory.getLogger(NacosRegistry.class);
+public class NacosRegister implements RegistryService {
+    private static final Logger logger = LoggerFactory.getLogger(NacosRegister.class);
 
     private NamingService namingService;
-    private String applicationName;
     private String nacosNameSpace;
 
-    private String ip;
-    private int port;
 
-    public NacosRegistry(String registryAddress, String applicationName) {
+    public NacosRegister(String registryAddress, String applicationName) {
         try {
             this.namingService = NamingFactory.createNamingService(registryAddress);
         } catch (Exception e) {
             logger.error("Nacos namingService creation failed. exception: {}", e.getMessage());
         }
-        this.applicationName = applicationName;
+
     }
 
-    public NacosRegistry(String registryAddress) {
+    public NacosRegister(String registryAddress) {
         try {
             this.namingService = NamingFactory.createNamingService(registryAddress);
         } catch (Exception e) {
             logger.error("Nacos namingService creation failed. exception: {}", e.getMessage());
         }
-        this.applicationName = "DefaultApplication";
     }
 
-    /**
-     * 注册服务
-     * @param host 主机地址
-     * @param port 端口地址
-     * @param serviceKey2BeanMap serviceKey -> bean
-     */
+
+
     @Override
-    public void registerService(String host, int port, Map<String, Object> serviceKey2BeanMap) {
-        List<RpcServiceInfo> serviceInfoList = ServiceUtil.beanMap2RpcServiceInfos(serviceKey2BeanMap);
-        this.ip = host;
-        this.port = port;
+    public void register(RegistryConfig registryConfig) {
+        String host = registryConfig.getParameters().get("host");
+        String port = registryConfig.getParameters().get("port");
+        String applicationName = registryConfig.getApplicationName();
+
         try {
-            RpcMetaData rpcMetaData = new RpcMetaData();
-            rpcMetaData.setHost(host);
-            rpcMetaData.setPort(port);
-            rpcMetaData.setServiceInfoList(serviceInfoList);
-            String serviceData = rpcMetaData.toJson();
-            this.nacosNameSpace = RegistryConfigEnum.NACOS_REGISTRY_PATH.getValue().concat(applicationName);
+            String serviceData = JSON.toJSONString(registryConfig);
+            this.nacosNameSpace = RegistryConstance.NACOS_REGISTRY_PATH.concat(applicationName);
+            //构建Nacos服务实例
             Instance serviceInstance = new Instance();
             serviceInstance.setIp(host);
-            serviceInstance.setPort(port);
+            serviceInstance.setPort(Integer.parseInt(port));
             Map<String, String> instanceMeta = new HashMap<>();
             instanceMeta.put("rpcProtocol", serviceData);
             serviceInstance.setMetadata(instanceMeta);
             namingService.registerInstance(nacosNameSpace, serviceInstance);
-            logger.info("Register {} new service, host: {}, port: {}.", serviceInfoList.size(), host, port);
+            logger.info("Register {} new service, host: {}, port: {}.", applicationName, host, port);
         } catch (Exception e) {
             logger.error("Register service fail, exception: {}.", e.getMessage());
         }
+
     }
 
-    /**
-     * 注销服务
-     */
     @Override
-    public void unregisterService() {
-        logger.info("Unregister service.");
+    public void unRegister(RegistryConfig registryConfig) {
+        String host = registryConfig.getParameters().get("host");
+        String port = registryConfig.getParameters().get("port");
+        String applicationName = registryConfig.getApplicationName();
+        logger.info("注销服务，服务地址为： host:" + host + "  port:" + port);
         try {
-            this.namingService.deregisterInstance(nacosNameSpace, this.ip, this.port);
+            this.namingService.deregisterInstance(nacosNameSpace, host, Integer.parseInt(port));
         } catch (Exception e) {
-            logger.error("Delete service path error: {}.", e.getMessage());
+            logger.error("注销Nacos服务失败: {}.", e.getMessage());
         } finally {
             try {
                 this.namingService.shutDown();
@@ -88,15 +81,6 @@ public class NacosRegistry implements RegistryService {
                 logger.error("NamingService shutDown error: {}.", ex.getMessage());
             }
         }
-    }
-
-    @Override
-    public void register(RegistryConfig registryConfig) {
-
-    }
-
-    @Override
-    public void unRegister(RegistryConfig registryConfig) {
 
     }
 
