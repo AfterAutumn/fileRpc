@@ -4,6 +4,7 @@ import org.idea.irpc.framework.core.common.ChannelFutureWrapper;
 import org.idea.irpc.framework.core.registy.RegistryConfig;
 
 /**
+ * 路由层抽象类
  * @Author jiangshang
  * @Date created in 8:08 下午 2023/1/5
  */

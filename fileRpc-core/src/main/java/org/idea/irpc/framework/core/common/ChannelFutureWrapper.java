@@ -3,8 +3,8 @@ package org.idea.irpc.framework.core.common;
 import io.netty.channel.ChannelFuture;
 
 /**
+ * 路由层的属性包装类
  * @Author jiangshang
- * @Date created in 9:57 下午 2021/12/12
  */
 public class ChannelFutureWrapper {
 

@@ -97,7 +97,8 @@ public class Server {
                 ch.pipeline().addLast(new ServerHandler());
             }
         });
-        this.batchExportUrl();
+        //注册服务到注册中心
+        this.registerServiceTo();
         //开始准备接收请求的任务
         SERVER_CHANNEL_DISPATCHER.startDataConsume();
         bootstrap.bind(serverConfig.getServerPort()).sync();
@@ -185,9 +186,9 @@ public class Server {
     }
 
     /**
-     * 批量暴露URL
+     * 注册服务到注册中心
      */
-    public void batchExportUrl() {
+    public void registerServiceTo() {
         Thread task = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -198,7 +199,7 @@ public class Server {
                 }
                 for (RegistryConfig url : PROVIDER_REGISTRY_CONFIG_SET) {
                     REGISTRY_SERVICE.register(url);
-                    LOGGER.info("[Server] export service {}", url.getServiceName());
+                    LOGGER.info("[Server] 注册到注册中心的服务 {}", url.getServiceName());
                 }
             }
         });

@@ -1,7 +1,9 @@
-package org.idea.irpc.framework.core.routeModule;
+package org.idea.irpc.framework.core.routeModule.routerImpl;
 
 import org.idea.irpc.framework.core.common.ChannelFutureWrapper;
 import org.idea.irpc.framework.core.registy.RegistryConfig;
+import org.idea.irpc.framework.core.routeModule.IRouter;
+import org.idea.irpc.framework.core.routeModule.Selector;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,14 +23,14 @@ public class RandomRouterImpl implements IRouter {
     public void refreshRouterArr(Selector selector) {
         //获取服务提供者的数目
         List<ChannelFutureWrapper> channelFutureWrappers = CONNECT_MAP.get(selector.getProviderServiceName());
-        ChannelFutureWrapper[] arr = new ChannelFutureWrapper[channelFutureWrappers.size()];
+        ChannelFutureWrapper[] channels = new ChannelFutureWrapper[channelFutureWrappers.size()];
         //提前生成调用先后顺序的随机数组
-        int[] result = createRandomIndex(arr.length);
+        int[] result = createRandomIndex(channels.length);
         //生成对应服务集群的每台机器的调用顺序
         for (int i = 0; i < result.length; i++) {
-            arr[i] = channelFutureWrappers.get(result[i]);
+            channels[i] = channelFutureWrappers.get(result[i]);
         }
-        SERVICE_ROUTER_MAP.put(selector.getProviderServiceName(), arr);
+        SERVICE_ROUTER_MAP.put(selector.getProviderServiceName(), channels);
         RegistryConfig registryConfig = new RegistryConfig();
         registryConfig.setServiceName(selector.getProviderServiceName());
         //更新权重
