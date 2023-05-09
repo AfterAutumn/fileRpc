@@ -191,17 +191,4 @@ public class ZookeeperRegister extends AbstractRegister implements RegistryServi
         super.doUnSubscribe(registryConfig);
     }
 
-    public static void main(String[] args) throws InterruptedException {
-        ZookeeperRegister zookeeperRegister = new ZookeeperRegister("localhost:2181");
-        AbstractZookeeperClient abstractZookeeperClient = zookeeperRegister.getZkClient();
-        String path = "/irpc/org.idea.irpc.framework.interfaces.DataService/provider/192.168.43.227:9093";
-        String nodeData = abstractZookeeperClient.getNodeData(path);
-        abstractZookeeperClient.watchNodeData(path, new Watcher() {
-            @Override
-            public void process(WatchedEvent watchedEvent) {
-                System.out.println(watchedEvent.getPath());
-            }
-        });
-        Thread.sleep(2000000);
-    }
 }
