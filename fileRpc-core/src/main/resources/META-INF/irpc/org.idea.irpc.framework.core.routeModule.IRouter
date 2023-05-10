@@ -1,2 +1,3 @@
 rotate=org.idea.irpc.framework.core.routeModule.routerImpl.RotateRouterImpl
 random=org.idea.irpc.framework.core.routeModule.routerImpl.RandomRouterImpl
+HashWeight=org.idea.irpc.framework.core.routeModule.routerImpl.HashWeightRouterImpl

@@ -1,7 +1,5 @@
 package org.idea.irpc.framework.core.routeModule;
 
-import org.idea.irpc.framework.core.common.ChannelFutureWrapper;
-
 /**
  * @Author jiangshang
  * @Date created in 8:13 下午 2023/1/5
@@ -17,7 +15,7 @@ public class Selector {
     /**
      * 经过二次筛选之后的future集合
      */
-    private ChannelFutureWrapper[] channelFutureWrappers;
+    private ChannelFutureService[] channelFutureServices;
 
     public String getProviderServiceName() {
         return providerServiceName;
@@ -27,11 +25,11 @@ public class Selector {
         this.providerServiceName = providerServiceName;
     }
 
-    public ChannelFutureWrapper[] getChannelFutureWrappers() {
-        return channelFutureWrappers;
+    public ChannelFutureService[] getChannelFutureWrappers() {
+        return channelFutureServices;
     }
 
-    public void setChannelFutureWrappers(ChannelFutureWrapper[] channelFutureWrappers) {
-        this.channelFutureWrappers = channelFutureWrappers;
+    public void setChannelFutureWrappers(ChannelFutureService[] channelFutureServices) {
+        this.channelFutureServices = channelFutureServices;
     }
 }

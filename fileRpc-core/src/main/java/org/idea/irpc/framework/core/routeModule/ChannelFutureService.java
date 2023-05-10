@@ -1,4 +1,4 @@
-package org.idea.irpc.framework.core.common;
+package org.idea.irpc.framework.core.routeModule;
 
 import io.netty.channel.ChannelFuture;
 
@@ -6,7 +6,7 @@ import io.netty.channel.ChannelFuture;
  * 路由层的属性包装类
  * @Author jiangshang
  */
-public class ChannelFutureWrapper {
+public class ChannelFutureService {
 
     private ChannelFuture channelFuture;
 
@@ -18,14 +18,14 @@ public class ChannelFutureWrapper {
 
     private String group;
 
-    public ChannelFutureWrapper(String host, Integer port,Integer weight) {
+    public ChannelFutureService(String host, Integer port, Integer weight) {
         this.host = host;
         this.port = port;
         this.weight = weight;
     }
 
 
-    public ChannelFutureWrapper() {
+    public ChannelFutureService() {
     }
 
     public ChannelFuture getChannelFuture() {

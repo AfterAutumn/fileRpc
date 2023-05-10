@@ -1,6 +1,6 @@
 package org.idea.irpc.framework.core.common.event.listener;
 
-import org.idea.irpc.framework.core.common.ChannelFutureWrapper;
+import org.idea.irpc.framework.core.routeModule.ChannelFutureService;
 import org.idea.irpc.framework.core.common.event.IRpcNodeChangeEvent;
 import org.idea.irpc.framework.core.registy.RegistryConfig;
 import org.idea.irpc.framework.core.registy.zookeeper.ProviderNodeInfo;
@@ -18,14 +18,14 @@ public class ProviderNodeDataChangeListener implements IRpcListener<IRpcNodeChan
     @Override
     public void callBack(Object t) {
         ProviderNodeInfo providerNodeInfo = ((ProviderNodeInfo) t);
-        List<ChannelFutureWrapper> channelFutureWrappers =  CONNECT_MAP.get(providerNodeInfo.getServiceName());
-        for (ChannelFutureWrapper channelFutureWrapper : channelFutureWrappers) {
+        List<ChannelFutureService> channelFutureServices =  CONNECT_MAP.get(providerNodeInfo.getServiceName());
+        for (ChannelFutureService channelFutureService : channelFutureServices) {
             //重置分组信息
-            String address = channelFutureWrapper.getHost()+":"+channelFutureWrapper.getPort();
+            String address = channelFutureService.getHost()+":"+ channelFutureService.getPort();
             if(address.equals(providerNodeInfo.getAddress())){
-                channelFutureWrapper.setGroup(providerNodeInfo.getGroup());
+                channelFutureService.setGroup(providerNodeInfo.getGroup());
                 //修改权重
-                channelFutureWrapper.setWeight(providerNodeInfo.getWeight());
+                channelFutureService.setWeight(providerNodeInfo.getWeight());
                 RegistryConfig registryConfig = new RegistryConfig();
                 registryConfig.setServiceName(providerNodeInfo.getServiceName());
                 //更新权重

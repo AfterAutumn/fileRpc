@@ -1,6 +1,5 @@
 package org.idea.irpc.framework.core.routeModule;
 
-import org.idea.irpc.framework.core.common.ChannelFutureWrapper;
 import org.idea.irpc.framework.core.registy.RegistryConfig;
 
 /**
@@ -23,7 +22,7 @@ public interface IRouter {
      *
      * @return
      */
-    ChannelFutureWrapper select(Selector selector);
+    ChannelFutureService select(Selector selector);
 
     /**
      * 更新权重信息

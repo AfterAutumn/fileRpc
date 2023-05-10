@@ -10,6 +10,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
+ * SPI机制加载配置类
  * @Author jiangshang
  * @Date created in 10:08 下午 2023/2/2
  */

@@ -193,7 +193,7 @@ public class Client {
         LinkedHashMap<String, Class> iRouterMap = EXTENSION_LOADER_CLASS_CACHE.get(IRouter.class.getName());
         Class iRouterClass = iRouterMap.get(routerStrategy);
         if (iRouterClass == null) {
-            throw new RuntimeException("no match routerStrategy for " + routerStrategy);
+            throw new RuntimeException("没有匹配的路由策略 " + routerStrategy);
         }
         IROUTER = (IRouter) iRouterClass.newInstance();
 

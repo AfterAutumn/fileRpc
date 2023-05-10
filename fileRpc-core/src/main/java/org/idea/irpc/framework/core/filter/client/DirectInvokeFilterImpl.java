@@ -1,6 +1,6 @@
 package org.idea.irpc.framework.core.filter.client;
 
-import org.idea.irpc.framework.core.common.ChannelFutureWrapper;
+import org.idea.irpc.framework.core.routeModule.ChannelFutureService;
 import org.idea.irpc.framework.core.protocol.RpcInvocation;
 import org.idea.irpc.framework.core.common.utils.CommonUtils;
 import org.idea.irpc.framework.core.filter.IClientFilter;
@@ -19,15 +19,15 @@ import static org.idea.irpc.framework.core.common.cache.CommonClientCache.RESPON
 public class DirectInvokeFilterImpl implements IClientFilter {
 
     @Override
-    public void doFilter(List<ChannelFutureWrapper> src, RpcInvocation rpcInvocation) {
+    public void doFilter(List<ChannelFutureService> src, RpcInvocation rpcInvocation) {
         String url = (String) rpcInvocation.getAttachments().get("url");
         if(CommonUtils.isEmpty(url)){
             return;
         }
-        Iterator<ChannelFutureWrapper> channelFutureWrapperIterator = src.iterator();
+        Iterator<ChannelFutureService> channelFutureWrapperIterator = src.iterator();
         while (channelFutureWrapperIterator.hasNext()){
-            ChannelFutureWrapper channelFutureWrapper = channelFutureWrapperIterator.next();
-            if(!(channelFutureWrapper.getHost()+":"+channelFutureWrapper.getPort()).equals(url)){
+            ChannelFutureService channelFutureService = channelFutureWrapperIterator.next();
+            if(!(channelFutureService.getHost()+":"+ channelFutureService.getPort()).equals(url)){
                 channelFutureWrapperIterator.remove();
             }
         }

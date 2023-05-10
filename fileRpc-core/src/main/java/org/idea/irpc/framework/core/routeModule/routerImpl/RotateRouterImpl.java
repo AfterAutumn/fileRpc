@@ -1,6 +1,6 @@
 package org.idea.irpc.framework.core.routeModule.routerImpl;
 
-import org.idea.irpc.framework.core.common.ChannelFutureWrapper;
+import org.idea.irpc.framework.core.routeModule.ChannelFutureService;
 import org.idea.irpc.framework.core.registy.RegistryConfig;
 import org.idea.irpc.framework.core.routeModule.IRouter;
 import org.idea.irpc.framework.core.routeModule.Selector;
@@ -19,17 +19,17 @@ public class RotateRouterImpl implements IRouter {
 
     @Override
     public void refreshRouterArr(Selector selector) {
-        List<ChannelFutureWrapper> channelFutureWrappers = CONNECT_MAP.get(selector.getProviderServiceName());
-        ChannelFutureWrapper[] channels = new ChannelFutureWrapper[channelFutureWrappers.size()];
-        for (int i=0;i<channelFutureWrappers.size();i++) {
-            channels[i]=channelFutureWrappers.get(i);
+        List<ChannelFutureService> channelFutureServices = CONNECT_MAP.get(selector.getProviderServiceName());
+        ChannelFutureService[] channels = new ChannelFutureService[channelFutureServices.size()];
+        for (int i = 0; i< channelFutureServices.size(); i++) {
+            channels[i]= channelFutureServices.get(i);
         }
         SERVICE_ROUTER_MAP.put(selector.getProviderServiceName(),channels);
     }
 
     @Override
-    public ChannelFutureWrapper select(Selector selector) {
-        return CHANNEL_FUTURE_POLLING_REF.getChannelFutureWrapper(selector);
+    public ChannelFutureService select(Selector selector) {
+        return CHANNEL_FUTURE_POLLING_REF.getChannelFutureService(selector);
     }
 
     @Override

@@ -4,7 +4,8 @@ package org.idea.irpc.framework.core.client;
 import com.esotericsoftware.minlog.Log;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelFuture;
-import org.idea.irpc.framework.core.common.ChannelFutureWrapper;
+import org.idea.irpc.framework.core.common.constance.Constance;
+import org.idea.irpc.framework.core.routeModule.ChannelFutureService;
 import org.idea.irpc.framework.core.protocol.RpcInvocation;
 import org.idea.irpc.framework.core.common.utils.CommonUtils;
 import org.idea.irpc.framework.core.registy.RegistryConfig;
@@ -17,9 +18,7 @@ import static org.idea.irpc.framework.core.common.cache.CommonClientCache.*;
 
 /**
  * 职责： 当注册中心的节点新增或者移除或者权重变化的时候，这个类主要负责对内存中的url做变更
- *
  * @Author jiangshang
- * @Date created in 11:18 上午 2021/12/16
  */
 public class ConnectionHandler {
 
@@ -57,20 +56,20 @@ public class ConnectionHandler {
         String providerURLInfo = URL_MAP.get(providerServiceName).get(providerIp);
         ProviderNodeInfo providerNodeInfo = RegistryConfig.buildURLFromUrlStr(providerURLInfo);
         //todo 缺少一个将url进行转换的组件
-        ChannelFutureWrapper channelFutureWrapper = new ChannelFutureWrapper();
-        channelFutureWrapper.setChannelFuture(channelFuture);
-        channelFutureWrapper.setHost(ip);
-        channelFutureWrapper.setPort(port);
-        channelFutureWrapper.setWeight(providerNodeInfo.getWeight());
-        channelFutureWrapper.setGroup(providerNodeInfo.getGroup());
+        ChannelFutureService channelFutureService = new ChannelFutureService();
+        channelFutureService.setChannelFuture(channelFuture);
+        channelFutureService.setHost(ip);
+        channelFutureService.setPort(port);
+        channelFutureService.setWeight(providerNodeInfo.getWeight());
+        channelFutureService.setGroup(providerNodeInfo.getGroup());
         SERVER_ADDRESS.add(providerIp);
-        List<ChannelFutureWrapper> channelFutureWrappers = CONNECT_MAP.get(providerServiceName);
-        if (CommonUtils.isEmptyList(channelFutureWrappers)) {
-            channelFutureWrappers = new ArrayList<>();
+        List<ChannelFutureService> channelFutureServices = CONNECT_MAP.get(providerServiceName);
+        if (CommonUtils.isEmptyList(channelFutureServices)) {
+            channelFutureServices = new ArrayList<>();
         }
-        channelFutureWrappers.add(channelFutureWrapper);
+        channelFutureServices.add(channelFutureService);
         //例如com.sise.test.UserService会被放入到一个Map集合中，key是服务的名字，value是对应的channel通道的List集合
-        CONNECT_MAP.put(providerServiceName, channelFutureWrappers);
+        CONNECT_MAP.put(providerServiceName, channelFutureServices);
         Selector selector = new Selector();
         selector.setProviderServiceName(providerServiceName);
         IROUTER.refreshRouterArr(selector);
@@ -97,12 +96,12 @@ public class ConnectionHandler {
      */
     public static void disConnect(String providerServiceName, String providerIp) {
         SERVER_ADDRESS.remove(providerIp);
-        List<ChannelFutureWrapper> channelFutureWrappers = CONNECT_MAP.get(providerServiceName);
-        if (CommonUtils.isNotEmptyList(channelFutureWrappers)) {
-            Iterator<ChannelFutureWrapper> iterator = channelFutureWrappers.iterator();
+        List<ChannelFutureService> channelFutureServices = CONNECT_MAP.get(providerServiceName);
+        if (CommonUtils.isNotEmptyList(channelFutureServices)) {
+            Iterator<ChannelFutureService> iterator = channelFutureServices.iterator();
             while (iterator.hasNext()) {
-                ChannelFutureWrapper channelFutureWrapper = iterator.next();
-                if (providerIp.equals(channelFutureWrapper.getHost() + ":" + channelFutureWrapper.getPort())) {
+                ChannelFutureService channelFutureService = iterator.next();
+                if (providerIp.equals(channelFutureService.getHost() + ":" + channelFutureService.getPort())) {
                     iterator.remove();
                 }
             }
@@ -118,8 +117,8 @@ public class ConnectionHandler {
      */
     public static ChannelFuture getChannelFuture(RpcInvocation rpcInvocation) {
         String providerServiceName = rpcInvocation.getTargetServiceName();
-        ChannelFutureWrapper[] channelFutureWrappers = SERVICE_ROUTER_MAP.get(providerServiceName);
-        if (channelFutureWrappers == null || channelFutureWrappers.length == 0) {
+        ChannelFutureService[] channelFutureServices = SERVICE_ROUTER_MAP.get(providerServiceName);
+        if (channelFutureServices == null || channelFutureServices.length == 0) {
             rpcInvocation.setRetry(0);
             rpcInvocation.setE(new RuntimeException("no provider exist for " + providerServiceName));
             rpcInvocation.setResponse(null);
@@ -128,16 +127,20 @@ public class ConnectionHandler {
             Log.error("channelFutureWrapper is null");
             return null;
         }
-        List<ChannelFutureWrapper> channelFutureWrappersList = new ArrayList<>(channelFutureWrappers.length);
-        for (int i = 0; i < channelFutureWrappers.length; i++) {
-            channelFutureWrappersList.add(channelFutureWrappers[i]);
+        List<ChannelFutureService> channelFutureWrappersList = new ArrayList<>(channelFutureServices.length);
+        for (int i = 0; i < channelFutureServices.length; i++) {
+            channelFutureWrappersList.add(channelFutureServices[i]);
         }
         //在客户端会做分组的过滤操作
         //这里不能用Arrays.asList 因为它所生成的list是一个不可修改的list
         CLIENT_FILTER_CHAIN.doFilter(channelFutureWrappersList, rpcInvocation);
+        if (Objects.equals(CLIENT_CONFIG.getRouterStrategy(), Constance.ROTATE_HASH_WEIGHT)) {
+            CLIENT_FILTER_CHAIN.doFilter(WEIGHT_COORS, rpcInvocation);
+        }
         Selector selector = new Selector();
         selector.setProviderServiceName(providerServiceName);
-        selector.setChannelFutureWrappers(channelFutureWrappers);
+        //设置过滤链路过滤后的服务提供者数组
+        selector.setChannelFutureWrappers(channelFutureServices);
         ChannelFuture channelFuture = IROUTER.select(selector).getChannelFuture();
         return channelFuture;
     }

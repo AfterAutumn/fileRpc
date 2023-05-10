@@ -1,6 +1,6 @@
 package org.idea.irpc.framework.core.filter.client;
 
-import org.idea.irpc.framework.core.common.ChannelFutureWrapper;
+import org.idea.irpc.framework.core.routeModule.ChannelFutureService;
 import org.idea.irpc.framework.core.protocol.RpcInvocation;
 import org.idea.irpc.framework.core.common.utils.CommonUtils;
 import org.idea.irpc.framework.core.filter.IClientFilter;
@@ -19,12 +19,12 @@ import static org.idea.irpc.framework.core.common.cache.CommonClientCache.RESPON
 public class GroupFilterImpl implements IClientFilter {
 
     @Override
-    public void doFilter(List<ChannelFutureWrapper> src, RpcInvocation rpcInvocation) {
+    public void doFilter(List<ChannelFutureService> src, RpcInvocation rpcInvocation) {
         String group = String.valueOf(rpcInvocation.getAttachments().get("group"));
-        Iterator<ChannelFutureWrapper> channelFutureWrapperIterator = src.iterator();
+        Iterator<ChannelFutureService> channelFutureWrapperIterator = src.iterator();
         while (channelFutureWrapperIterator.hasNext()) {
-            ChannelFutureWrapper channelFutureWrapper = channelFutureWrapperIterator.next();
-            if (!channelFutureWrapper.getGroup().equals(group)) {
+            ChannelFutureService channelFutureService = channelFutureWrapperIterator.next();
+            if (!channelFutureService.getGroup().equals(group)) {
                 channelFutureWrapperIterator.remove();
             }
         }

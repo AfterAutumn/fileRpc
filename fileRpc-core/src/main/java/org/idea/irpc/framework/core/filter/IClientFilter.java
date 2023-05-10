@@ -1,6 +1,6 @@
 package org.idea.irpc.framework.core.filter;
 
-import org.idea.irpc.framework.core.common.ChannelFutureWrapper;
+import org.idea.irpc.framework.core.routeModule.ChannelFutureService;
 import org.idea.irpc.framework.core.protocol.RpcInvocation;
 
 import java.util.List;
@@ -20,5 +20,5 @@ public interface IClientFilter extends IFilter {
      * @param rpcInvocation
      * @return
      */
-    void doFilter(List<ChannelFutureWrapper> src, RpcInvocation rpcInvocation);
+    void doFilter(List<ChannelFutureService> src, RpcInvocation rpcInvocation);
 }

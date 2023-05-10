@@ -18,7 +18,7 @@ public class ClientConfig {
     private String proxyType;
 
     /**
-     * 负载均衡策略 example:random,rotate
+     * 负载均衡策略 example:random,rotate,HashWeight
      */
     private String routerStrategy;
 

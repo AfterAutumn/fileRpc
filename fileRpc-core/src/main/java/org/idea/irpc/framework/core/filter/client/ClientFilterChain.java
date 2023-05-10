@@ -1,6 +1,6 @@
 package org.idea.irpc.framework.core.filter.client;
 
-import org.idea.irpc.framework.core.common.ChannelFutureWrapper;
+import org.idea.irpc.framework.core.routeModule.ChannelFutureService;
 import org.idea.irpc.framework.core.protocol.RpcInvocation;
 import org.idea.irpc.framework.core.filter.IClientFilter;
 
@@ -19,7 +19,7 @@ public class ClientFilterChain {
         iClientFilterList.add(iClientFilter);
     }
 
-    public void doFilter(List<ChannelFutureWrapper> src, RpcInvocation rpcInvocation) {
+    public void doFilter(List<ChannelFutureService> src, RpcInvocation rpcInvocation) {
         for (IClientFilter iClientFilter : iClientFilterList) {
             iClientFilter.doFilter(src, rpcInvocation);
         }

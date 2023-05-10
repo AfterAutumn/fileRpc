@@ -1,7 +1,6 @@
 package org.idea.irpc.framework.core.common.utils;
 
-import io.netty.channel.ChannelFuture;
-import org.idea.irpc.framework.core.common.ChannelFutureWrapper;
+import org.idea.irpc.framework.core.routeModule.ChannelFutureService;
 
 import java.net.Inet4Address;
 import java.net.InetAddress;
@@ -82,10 +81,10 @@ public class CommonUtils {
         return !isEmptyList(list);
     }
 
-    public static ChannelFutureWrapper[] convertFromList(List<ChannelFutureWrapper> channelFutureWrappers){
-        ChannelFutureWrapper[] channelFutureWrappersArr = new ChannelFutureWrapper[channelFutureWrappers.size()];
-        for(int i=0;i<channelFutureWrappers.size();i++){
-            channelFutureWrappersArr[i] = channelFutureWrappers.get(i);
+    public static ChannelFutureService[] convertFromList(List<ChannelFutureService> channelFutureServices){
+        ChannelFutureService[] channelFutureWrappersArr = new ChannelFutureService[channelFutureServices.size()];
+        for(int i = 0; i< channelFutureServices.size(); i++){
+            channelFutureWrappersArr[i] = channelFutureServices.get(i);
         }
         return channelFutureWrappersArr;
     }

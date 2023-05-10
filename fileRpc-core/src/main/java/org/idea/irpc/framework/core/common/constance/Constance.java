@@ -17,6 +17,8 @@ public class Constance {
 
     public static final String ROTATE_ROUTER_TYPE = "rotate";
 
+    public static final String ROTATE_HASH_WEIGHT = "HashWeight";
+
     public static final String JDK_SERIALIZE_TYPE = "jdk";
 
     public static final String FAST_JSON_SERIALIZE_TYPE = "fastJson";

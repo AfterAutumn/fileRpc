@@ -1,6 +1,6 @@
 package org.idea.irpc.framework.core.routeModule.routerImpl;
 
-import org.idea.irpc.framework.core.common.ChannelFutureWrapper;
+import org.idea.irpc.framework.core.routeModule.ChannelFutureService;
 import org.idea.irpc.framework.core.registy.RegistryConfig;
 import org.idea.irpc.framework.core.routeModule.IRouter;
 import org.idea.irpc.framework.core.routeModule.Selector;
@@ -22,13 +22,13 @@ public class RandomRouterImpl implements IRouter {
     @Override
     public void refreshRouterArr(Selector selector) {
         //获取服务提供者的数目
-        List<ChannelFutureWrapper> channelFutureWrappers = CONNECT_MAP.get(selector.getProviderServiceName());
-        ChannelFutureWrapper[] channels = new ChannelFutureWrapper[channelFutureWrappers.size()];
+        List<ChannelFutureService> channelFutureServices = CONNECT_MAP.get(selector.getProviderServiceName());
+        ChannelFutureService[] channels = new ChannelFutureService[channelFutureServices.size()];
         //提前生成调用先后顺序的随机数组
         int[] result = createRandomIndex(channels.length);
         //生成对应服务集群的每台机器的调用顺序
         for (int i = 0; i < result.length; i++) {
-            channels[i] = channelFutureWrappers.get(result[i]);
+            channels[i] = channelFutureServices.get(result[i]);
         }
         SERVICE_ROUTER_MAP.put(selector.getProviderServiceName(), channels);
         RegistryConfig registryConfig = new RegistryConfig();
@@ -38,27 +38,27 @@ public class RandomRouterImpl implements IRouter {
     }
 
     @Override
-    public ChannelFutureWrapper select(Selector selector) {
-        return CHANNEL_FUTURE_POLLING_REF.getChannelFutureWrapper(selector);
+    public ChannelFutureService select(Selector selector) {
+        return CHANNEL_FUTURE_POLLING_REF.getChannelFutureService(selector);
     }
 
     @Override
     public void updateWeight(RegistryConfig registryConfig) {
         //服务节点的权重
-        List<ChannelFutureWrapper> channelFutureWrappers = CONNECT_MAP.get(registryConfig.getServiceName());
-        Integer[] weightArr = createWeightArr(channelFutureWrappers);
+        List<ChannelFutureService> channelFutureServices = CONNECT_MAP.get(registryConfig.getServiceName());
+        Integer[] weightArr = createWeightArr(channelFutureServices);
         Integer[] finalArr = createRandomArr(weightArr);
-        ChannelFutureWrapper[] finalChannelFutureWrappers = new ChannelFutureWrapper[finalArr.length];
+        ChannelFutureService[] finalChannelFutureServices = new ChannelFutureService[finalArr.length];
         for (int j = 0; j < finalArr.length; j++) {
-            finalChannelFutureWrappers[j] = channelFutureWrappers.get(finalArr[j]);
+            finalChannelFutureServices[j] = channelFutureServices.get(finalArr[j]);
         }
-        SERVICE_ROUTER_MAP.put(registryConfig.getServiceName(),finalChannelFutureWrappers);
+        SERVICE_ROUTER_MAP.put(registryConfig.getServiceName(), finalChannelFutureServices);
     }
 
-    private static Integer[] createWeightArr(List<ChannelFutureWrapper> channelFutureWrappers) {
+    private static Integer[] createWeightArr(List<ChannelFutureService> channelFutureServices) {
         List<Integer> weightArr = new ArrayList<>();
-        for (int k = 0; k < channelFutureWrappers.size(); k++) {
-            Integer weight = channelFutureWrappers.get(k).getWeight();
+        for (int k = 0; k < channelFutureServices.size(); k++) {
+            Integer weight = channelFutureServices.get(k).getWeight();
             int c = weight / 100;
             for (int i = 0; i < c; i++) {
                 weightArr.add(k);
