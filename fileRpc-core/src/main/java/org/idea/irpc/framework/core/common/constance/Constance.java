@@ -43,4 +43,10 @@ public class Constance {
 
     public static final String DEFAULT_PROPERTIES_FILE = "fileRpc.properties";
 
+
+    public static void main(String[] args) {
+        String[] indicName = "非标融资;;2".split(";");
+        System.out.println(indicName.toString());
+    }
+
 }
