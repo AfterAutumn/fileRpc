@@ -134,7 +134,7 @@ public class ApiTestController {
     public String testThread() throws IOException {
 
         String result = fileTransferService.testThread(readFile());
-        System.out.println("动态线程池测试: " + result);
+        System.out.println("上传文件结果: " + result);
         return result;
     }
 
@@ -145,7 +145,7 @@ public class ApiTestController {
     public String testNormalThread() throws IOException {
 
         String result = fileTransferService.testNormalThread(readFile());
-        System.out.println("动态线程池测试: " + result);
+        System.out.println("上传文件结果: " + result);
         return result;
     }
 

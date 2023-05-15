@@ -20,7 +20,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 /**
- * 序列化性能比对测试
+ * 序列化性能比对测试,测试不同序列化的吞吐性
  *
  * @Author jiangshang
  */
@@ -43,28 +43,27 @@ public class SerializeCompareTest {
     }
 
     @Benchmark
-    public void jdkSerializeTest() throws IOException {
-        SerializeFactory serializeFactory = new JdkSerializeFactory();
-        FileMessage file = buildFileData();
-        byte[] result = serializeFactory.serialize(file);
-        FileMessage deserialize = serializeFactory.deserialize(result,FileMessage.class);
-    }
-
-    @Benchmark
     public void hessianSerializeTest() throws IOException {
         SerializeFactory serializeFactory = new HessianSerializeFactory();
         FileMessage file = buildFileData();
         byte[] result = serializeFactory.serialize(file);
-        FileMessage deserialize = serializeFactory.deserialize(result,FileMessage.class);
+        //FileMessage deserialize = serializeFactory.deserialize(result,FileMessage.class);
     }
 
+    @Benchmark
+    public void jdkSerializeTest() throws IOException {
+        SerializeFactory serializeFactory = new JdkSerializeFactory();
+        FileMessage file = buildFileData();
+        byte[] result = serializeFactory.serialize(file);
+        //FileMessage deserialize = serializeFactory.deserialize(result,FileMessage.class);
+    }
 
     @Benchmark
     public void kryoSerializeTest() throws IOException {
         SerializeFactory serializeFactory = new KryoSerializeFactory();
         FileMessage file = buildFileData();
         byte[] result = serializeFactory.serialize(file);
-        FileMessage deserialize = serializeFactory.deserialize(result,FileMessage.class);
+        //FileMessage deserialize = serializeFactory.deserialize(result,FileMessage.class);
     }
 
     @Benchmark
@@ -72,14 +71,14 @@ public class SerializeCompareTest {
         SerializeFactory serializeFactory = new ProtostuffSerializeFactory();
         FileMessage file = buildFileData();
         byte[] result = serializeFactory.serialize(file);
-        FileMessage deserialize = serializeFactory.deserialize(result,FileMessage.class);
+        //FileMessage deserialize = serializeFactory.deserialize(result,FileMessage.class);
     }
 
 
     public static void main(String[] args) throws RunnerException {
-        //配置进行2轮热数 测试2轮 2个线程
+        //配置进行1轮热数 测试2轮 2个线程
         //预热的原因 是JVM在代码执行多次会有优化
-        Options options = new OptionsBuilder().warmupIterations(2).measurementBatchSize(2)
+        Options options = new OptionsBuilder().warmupIterations(1).measurementBatchSize(2)
                 .forks(2).build();
         new Runner(options).run();
     }

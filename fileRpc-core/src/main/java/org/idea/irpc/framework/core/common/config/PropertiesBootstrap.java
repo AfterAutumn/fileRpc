@@ -22,6 +22,7 @@ public class PropertiesBootstrap {
         }
         ServerConfig serverConfig = new ServerConfig();
         serverConfig.setServerPort(Integer.valueOf(PropertiesLoader.getPropertiesStr(PropertiesConstance.SERVER_PORT)));
+        serverConfig.setWeight(Integer.valueOf(PropertiesLoader.getPropertiesStr(PropertiesConstance.SERVER_WEIGHT)));
         serverConfig.setApplicationName(PropertiesLoader.getPropertiesStr(PropertiesConstance.APPLICATION_NAME));
         serverConfig.setRegisterAddr(PropertiesLoader.getPropertiesStr(PropertiesConstance.REGISTER_ADDRESS));
         serverConfig.setRegisterType(PropertiesLoader.getPropertiesStr(PropertiesConstance.REGISTER_TYPE));
@@ -45,13 +46,14 @@ public class PropertiesBootstrap {
         }
         ClientConfig clientConfig = new ClientConfig();
         clientConfig.setApplicationName(PropertiesLoader.getPropertiesNotBlank(PropertiesConstance.APPLICATION_NAME));
+        clientConfig.setWeight(Integer.valueOf(PropertiesLoader.getPropertiesNotBlank(PropertiesConstance.SERVER_WEIGHT)));
         clientConfig.setRegisterAddr(PropertiesLoader.getPropertiesNotBlank(PropertiesConstance.REGISTER_ADDRESS));
         clientConfig.setRegisterType(PropertiesLoader.getPropertiesNotBlank(PropertiesConstance.REGISTER_TYPE));
-        clientConfig.setProxyType(PropertiesLoader.getPropertiesStrDefault(PropertiesConstance.PROXY_TYPE,JDK_PROXY_TYPE));
-        clientConfig.setRouterStrategy(PropertiesLoader.getPropertiesStrDefault(PropertiesConstance.ROUTER_TYPE,RANDOM_ROUTER_TYPE));
-        clientConfig.setClientSerialize(PropertiesLoader.getPropertiesStrDefault(PropertiesConstance.CLIENT_SERIALIZE_TYPE,JDK_SERIALIZE_TYPE));
-        clientConfig.setTimeOut(PropertiesLoader.getPropertiesIntegerDefault(PropertiesConstance.CLIENT_DEFAULT_TIME_OUT,DEFAULT_TIMEOUT));
-        clientConfig.setMaxServerRespDataSize(PropertiesLoader.getPropertiesIntegerDefault(PropertiesConstance.CLIENT_MAX_DATA_SIZE,CLIENT_DEFAULT_MSG_LENGTH));
+        clientConfig.setProxyType(PropertiesLoader.getPropertiesStrDefault(PropertiesConstance.PROXY_TYPE, JDK_PROXY_TYPE));
+        clientConfig.setRouterStrategy(PropertiesLoader.getPropertiesStrDefault(PropertiesConstance.ROUTER_TYPE, RANDOM_ROUTER_TYPE));
+        clientConfig.setClientSerialize(PropertiesLoader.getPropertiesStrDefault(PropertiesConstance.CLIENT_SERIALIZE_TYPE, JDK_SERIALIZE_TYPE));
+        clientConfig.setTimeOut(PropertiesLoader.getPropertiesIntegerDefault(PropertiesConstance.CLIENT_DEFAULT_TIME_OUT, DEFAULT_TIMEOUT));
+        clientConfig.setMaxServerRespDataSize(PropertiesLoader.getPropertiesIntegerDefault(PropertiesConstance.CLIENT_MAX_DATA_SIZE, CLIENT_DEFAULT_MSG_LENGTH));
         return clientConfig;
     }
 

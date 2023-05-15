@@ -5,6 +5,7 @@ import com.esotericsoftware.kryo.io.Input;
 import com.esotericsoftware.kryo.io.Output;
 import org.idea.irpc.framework.core.serialize.SerializeFactory;
 import org.idea.irpc.framework.core.serialize.jdk.JdkSerializeFactory;
+import org.js.fileRpc.interfaces.bean.FileMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,6 +25,7 @@ public class KryoSerializeFactory implements SerializeFactory {
 
     private static final ThreadLocal<Kryo> kryos = ThreadLocal.withInitial(() -> {
         Kryo kryo = new Kryo();
+        kryo.register(FileMessage.class);
         return kryo;
     });
 

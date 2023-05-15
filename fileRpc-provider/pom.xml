@@ -24,7 +24,7 @@
         </plugins>
     </build>
     <modules>
-        <module>fileRpc-fileTransfer-provider</module>
+        <module>fileRpc-fileTransfer-provider1</module>
         <module>fileRpc-good-provider</module>
         <module>fileRpc-pay-provider</module>
     </modules>

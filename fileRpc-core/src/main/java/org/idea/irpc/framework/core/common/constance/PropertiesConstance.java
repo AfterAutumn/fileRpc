@@ -8,6 +8,9 @@ package org.idea.irpc.framework.core.common.constance;
 public class PropertiesConstance {
     public static final String DEFAULT_PROPERTIES_FILE = "fileRpc.properties";
     public static final String SERVER_PORT = "fileRpc.serverPort";
+
+    //服务端权重
+    public static final String SERVER_WEIGHT = "fileRpc.weight";
     public static final String REGISTER_ADDRESS = "fileRpc.registerAddr";
     public static final String REGISTER_TYPE = "fileRpc.registerType";
     public static final String APPLICATION_NAME = "fileRpc.applicationName";

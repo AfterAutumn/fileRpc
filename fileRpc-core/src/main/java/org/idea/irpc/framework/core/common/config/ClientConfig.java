@@ -10,6 +10,8 @@ public class ClientConfig {
 
     private String registerAddr;
 
+    private Integer weight;
+
     private String registerType;
 
     /**
@@ -99,5 +101,13 @@ public class ClientConfig {
 
     public void setRegisterType(String registerType) {
         this.registerType = registerType;
+    }
+
+    public Integer getWeight() {
+        return weight;
+    }
+
+    public void setWeight(Integer weight) {
+        this.weight = weight;
     }
 }

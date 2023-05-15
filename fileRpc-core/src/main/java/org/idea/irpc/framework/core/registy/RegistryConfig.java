@@ -1,10 +1,13 @@
 package org.idea.irpc.framework.core.registy;
 
+import org.idea.irpc.framework.core.common.cache.CommonServerCache;
+import org.idea.irpc.framework.core.common.constance.Constance;
 import org.idea.irpc.framework.core.registy.zookeeper.ProviderNodeInfo;
 
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * 注册中心配置类（配置属性
@@ -68,7 +71,8 @@ public class RegistryConfig {
         String host = registryConfig.getParameters().get("host");
         String port = registryConfig.getParameters().get("port");
         String group = registryConfig.getParameters().get("group");
-        return new String((registryConfig.getApplicationName() + ";" + registryConfig.getServiceName() + ";" + host + ":" + port + ";" + System.currentTimeMillis() + ";100;" + group).getBytes(), StandardCharsets.UTF_8);
+        String weight = String.valueOf(CommonServerCache.SERVER_CONFIG.getWeight());
+        return new String((registryConfig.getApplicationName() + ";" + registryConfig.getServiceName() + ";" + host + ":" + port + ";" + System.currentTimeMillis() + ";" + weight + ";" + group).getBytes(), StandardCharsets.UTF_8);
     }
 
     /**
@@ -96,14 +100,11 @@ public class RegistryConfig {
         providerNodeInfo.setServiceName(items[1]);
         providerNodeInfo.setAddress(items[2]);
         providerNodeInfo.setRegistryTime(items[3]);
-        providerNodeInfo.setWeight(Integer.valueOf(items[4]));
+        providerNodeInfo.setWeight(Objects.isNull(CommonServerCache.SERVER_CONFIG)
+                ? 100 : CommonServerCache.SERVER_CONFIG.getWeight());
         providerNodeInfo.setGroup(String.valueOf(items[5]));
         return providerNodeInfo;
     }
 
 
-    public static void main(String[] args) {
-        ProviderNodeInfo providerNodeInfo = buildURLFromUrlStr("irpc-provider;org.idea.irpc.framework.interfaces.UserService;192.168.43.227:9093;1643429082637;100;default");
-        System.out.println(providerNodeInfo);
-    }
 }

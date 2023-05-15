@@ -58,8 +58,8 @@ public class JDKProxyHandler implements InvocationHandler {
         }
         RESPONSE_QUEUE.put(rpcInvocation.getUuid(), OBJECT);
         long beginTime = System.currentTimeMillis();
-        //最大等待时间
-        long endTime = System.currentTimeMillis() + timeOut;
+        //默认接口最大等待时间
+        long endTime = beginTime + timeOut;
         int retryTimes = 0;
         //请求中设置的超时次数
         int retryCounts = rpcInvocation.getRetry();
@@ -76,15 +76,14 @@ public class JDKProxyHandler implements InvocationHandler {
                     if (rpcInvocationResp.getRetry() == 0) {
                         return rpcInvocationResp.getResponse();
                     }
-                    //如果是因为超时的情况，才会触发重试规则，否则重试机制不生效
-                    if (System.currentTimeMillis() > endTime) {
-                        retryTimes++;
-                        //重新请求
-                        rpcInvocation.setResponse(null);
-                        rpcInvocation.setRetry(rpcInvocationResp.getRetry() - 1);
-                        RESPONSE_QUEUE.put(rpcInvocation.getUuid(), OBJECT);
-                        SEND_QUEUE.add(rpcInvocation);
-                    }
+                    //如果是发生了异常或者超时 则会进行重试
+                    retryTimes++;
+                    //重新请求 把请求放到发送队列中
+                    rpcInvocation.setResponse(null);
+                    rpcInvocation.setRetry(rpcInvocationResp.getRetry() - 1);
+                    RESPONSE_QUEUE.put(rpcInvocation.getUuid(), OBJECT);
+                    SEND_QUEUE.add(rpcInvocation);
+
                 }
             }
         }

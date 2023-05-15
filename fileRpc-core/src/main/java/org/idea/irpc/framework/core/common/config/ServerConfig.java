@@ -8,6 +8,8 @@ public class ServerConfig {
 
     private Integer serverPort;
 
+    private Integer weight;
+
     private String registerAddr;
 
     private String registerType;
@@ -110,5 +112,13 @@ public class ServerConfig {
 
     public void setRegisterType(String registerType) {
         this.registerType = registerType;
+    }
+
+    public Integer getWeight() {
+        return weight;
+    }
+
+    public void setWeight(Integer weight) {
+        this.weight = weight;
     }
 }

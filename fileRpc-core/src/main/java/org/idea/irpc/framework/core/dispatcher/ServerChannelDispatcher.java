@@ -74,16 +74,17 @@ public class ServerChannelDispatcher {
                                 if (method.getName().equals(rpcInvocation.getTargetMethod())) {
                                     if (method.getReturnType().equals(Void.TYPE)) {
                                         try {
+                                            //方法的调用通过反射来执行
                                             method.invoke(aimObject, rpcInvocation.getArgs());
                                         } catch (Exception e) {
-                                            //业务异常
+                                            //业务异常信息捕获
                                             rpcInvocation.setE(e);
                                         }
                                     } else {
                                         try {
                                             result = method.invoke(aimObject, rpcInvocation.getArgs());
                                         } catch (Exception e) {
-                                            //业务异常
+                                            //业务异常信息捕获
                                             rpcInvocation.setE(e);
                                         }
                                     }
