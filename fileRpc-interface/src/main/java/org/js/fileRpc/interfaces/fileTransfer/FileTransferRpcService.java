@@ -23,4 +23,6 @@ public interface FileTransferRpcService {
     String testThread(FileMessage message);
 
     String testNormalThread(FileMessage message);
+
+    String HTTPTest(FileMessage message);
 }

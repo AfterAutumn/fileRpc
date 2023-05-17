@@ -1,6 +1,7 @@
 package org.js.fileRpc.common.consumer.controller;
 
 import com.alibaba.nacos.api.config.annotation.NacosValue;
+import org.apache.http.client.utils.HttpClientUtils;
 import org.js.fileRpc.interfaces.bean.FileMessage;
 import org.js.fileRpc.interfaces.good.GoodRpcService;
 import org.js.fileRpc.interfaces.pay.PayRpcService;
@@ -164,7 +165,15 @@ public class ApiTestController {
         }
         byte[] fileData = outputStream.toByteArray();
         return new FileMessage("test.txt", fileData, fileData.length);
+    }
 
+
+    @GetMapping(value = "/HTTPTest")
+    public String HTTPTest() throws IOException {
+
+        String result = fileTransferService.testNormalThread(readFile());
+        System.out.println("上传文件结果: " + result);
+        return result;
     }
 
 }
