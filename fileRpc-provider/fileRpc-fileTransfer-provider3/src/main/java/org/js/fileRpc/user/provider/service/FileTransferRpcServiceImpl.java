@@ -147,4 +147,9 @@ public class FileTransferRpcServiceImpl implements FileTransferRpcService {
         return "success   服务的节点为：" + appName;
     }
 
+    @Override
+    public String HTTPTest(FileMessage message) {
+        return null;
+    }
+
 }
