@@ -1,4 +1,0 @@
-JMH S 49 org.js.fileRpc.jmh.serialize.SerializeCompareTest S 84 org.js.fileRpc.jmh.serialize.generated.SerializeCompareTest_jdkSerializeTest_jmhTest S 16 jdkSerializeTest S 10 Throughput E A 1 1 1 E E E E E E E E E E E E E E E E E 
-JMH S 49 org.js.fileRpc.jmh.serialize.SerializeCompareTest S 88 org.js.fileRpc.jmh.serialize.generated.SerializeCompareTest_hessianSerializeTest_jmhTest S 20 hessianSerializeTest S 10 Throughput E A 1 1 1 E E E E E E E E E E E E E E E E E 
-JMH S 49 org.js.fileRpc.jmh.serialize.SerializeCompareTest S 85 org.js.fileRpc.jmh.serialize.generated.SerializeCompareTest_kryoSerializeTest_jmhTest S 17 kryoSerializeTest S 10 Throughput E A 1 1 1 E E E E E E E E E E E E E E E E E 
-JMH S 49 org.js.fileRpc.jmh.serialize.SerializeCompareTest S 91 org.js.fileRpc.jmh.serialize.generated.SerializeCompareTest_protostuffSerializeTest_jmhTest S 23 protostuffSerializeTest S 10 Throughput E A 1 1 1 E E E E E E E E E E E E E E E E E 
